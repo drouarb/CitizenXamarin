@@ -13,10 +13,8 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="10">
-                            <Label Text="{Binding Author}" LineBreakMode="NoWrap"
-                                       FontSize="16" />
-                            <Label Text="{Binding Message}" LineBreakMode="NoWrap"
-                                       FontSize="13" />
+                            <Label Text="{Binding Author}" LineBreakMode="NoWrap" FontSize="16" />
+                            <Label Text="{Binding Message}" LineBreakMode="NoWrap" FontSize="13" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

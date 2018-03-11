@@ -23,6 +23,13 @@ namespace citizen.Services.Api
             tr = thread;
         }
 
+        public async Task<String> GetUserNameById(String id)
+        {
+            string rawValue = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/common/profile/id/" + id, HttpMethod.Get, null);
+            Console.WriteLine(id + "get username:" + rawValue);
+            return JsonConvert.DeserializeObject<UserItem>(rawValue).pseudo;
+        }
+
         public async Task<String> CreateThreadAsync(String threadName)
         {
             string rawValue = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/threads?topic=" + threadName, HttpMethod.Post, null);
