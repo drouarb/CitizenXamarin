@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="citizen.Views.LoginPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+                <StackLayout Grid.Column="1" Grid.Row="1">
+                    <Label Text="Username" />
+                    <Entry x:Name="UsernameEntry" Placeholder="username" />
+                    <Label Text="Password" />
+                    <Entry x:Name="PasswordEntry" IsPassword="true" />
+                    <Label x:Name="MessageLabel" Opacity="0" Text="Label" TextColor="Red" HorizontalTextAlignment="Center" />
+
+                    <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                        <Button x:Name="LoginButton" Text="Login" Clicked="OnLoginButtonClicked"
+                                BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" 
+                                AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                        <ActivityIndicator
+                            IsVisible="{Binding IsBusy}"
+                            IsRunning="{Binding IsBusy}"
+                            Color="Black" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                    </AbsoluteLayout>
+                </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
