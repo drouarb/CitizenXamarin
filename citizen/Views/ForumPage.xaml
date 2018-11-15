@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="citizen.Views.PollPage" Title="{Binding Title}">
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="citizen.Views.ForumPage" Title="{Binding Title}">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="PollListView" ItemsSource="{Binding Polls}" VerticalOptions="FillAndExpand"
-                      HasUnevenRows="true" RefreshCommand="{Binding LoadPollsCommand}" IsPullToRefreshEnabled="true"
+            <ListView x:Name="TopicListView" ItemsSource="{Binding Topic}" VerticalOptions="FillAndExpand"
+                      HasUnevenRows="true" RefreshCommand="{Binding LoadTopicsCommand}" IsPullToRefreshEnabled="true"
                       IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement"
-                      ItemSelected="OnPollSelected">
+                      ItemSelected="TopicListView_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

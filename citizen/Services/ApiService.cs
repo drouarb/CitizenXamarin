@@ -4,7 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using citizen.Models.Api;
+using citizen.Models;
 using Newtonsoft.Json;
+using Xamarin.Forms.Internals;
 
 namespace citizen.Services
 {
@@ -40,6 +42,24 @@ namespace citizen.Services
 
             _authenticationResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await resp.Content.ReadAsStringAsync());
             return true;
+        }
+
+        public async Task<List<ThreadItem>> GetThreads()
+        {
+            var uri = new Uri(string.Format("https://citizen.navispeed.eu/api/threads", string.Empty));
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Token");
+            HttpResponseMessage response = await _httpClient.GetAsync(uri);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Log.Warning("GetThreads", content);
+                return JsonConvert.DeserializeObject<List<ThreadItem>>(content);
+            }
+
+            // return response.StatusCode;
+            return null;
         }
     }
 }

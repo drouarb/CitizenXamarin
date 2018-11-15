@@ -20,4 +20,10 @@
       <Generator></Generator>
     </Page>
   </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\ForumPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
