@@ -12,17 +12,20 @@ namespace citizen.ViewModels
     {
         public Command LoadTopicCommand { get; set; }
         public ObservableCollection<ThreadItem> Threads { get; set; }
-        public IDataStore<ThreadItem> ThreadStore => DependencyService.Get<IDataStore<ThreadItem>>();
+        public ThreadStore ThreadStore { get; set; }
 
         public ForumTopicViewModel ()
 		{
             Title = "Agora";
             Threads = new ObservableCollection<ThreadItem>();
+            ThreadStore = new ThreadStore();
             LoadTopicCommand = new Command(async () => await ExecuteLoadThreadCommand());
+            LoadTopicCommand.Execute(null);
         }
 
         async Task ExecuteLoadThreadCommand()
         {
+            Xamarin.Forms.Internals.Log.Warning("CAT","##################################### TEST");
             if (IsBusy)
                 return;
 

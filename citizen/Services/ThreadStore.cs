@@ -6,7 +6,7 @@ using citizen.Models;
 
 namespace citizen.Services
 {
-    class ThreadStore : IDataStore<ThreadItem>
+    public class ThreadStore : IDataStore<ThreadItem>
     {
         List<ThreadItem> threads;
 
@@ -33,7 +33,7 @@ namespace citizen.Services
 
         public async Task<IEnumerable<ThreadItem>> GetItemsAsync(bool forceRefresh = false)
         {
-            return await Task.FromResult(threads);
+            return await App.ApiService.GetThreads();
         }
 
         public Task<bool> UpdateItemAsync(ThreadItem item)

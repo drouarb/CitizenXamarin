@@ -4,7 +4,7 @@
              x:Class="citizen.Views.ForumPage" Title="{Binding Title}">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="TopicListView" ItemsSource="{Binding Topic}" VerticalOptions="FillAndExpand"
+            <ListView x:Name="TopicListView" ItemsSource="{Binding Threads}" VerticalOptions="FillAndExpand"
                       HasUnevenRows="true" RefreshCommand="{Binding LoadTopicsCommand}" IsPullToRefreshEnabled="true"
                       IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement"
                       ItemSelected="TopicListView_ItemSelected">
