@@ -12,15 +12,12 @@ namespace citizen.ViewModels
     {
         public Command LoadTopicCommand { get; set; }
         public ObservableCollection<ThreadItem> Threads { get; set; }
-        public ThreadStore ThreadStore { get; set; }
 
         public ForumTopicViewModel ()
 		{
             Title = "Agora";
             Threads = new ObservableCollection<ThreadItem>();
-            ThreadStore = new ThreadStore();
             LoadTopicCommand = new Command(async () => await ExecuteLoadThreadCommand());
-            LoadTopicCommand.Execute(null);
         }
 
         async Task ExecuteLoadThreadCommand()

@@ -13,7 +13,16 @@ namespace citizen.Services
         public ThreadStore()
         {
             threads = new List<ThreadItem>();
-            threads = App.ApiService.GetThreads().Result;
+            var mockItems = new List<ThreadItem>
+            {
+                new ThreadItem { uuid = Guid.NewGuid(), name = "First item", creationDate=new DateTime() },
+            };
+
+            foreach (var item in mockItems)
+            {
+                threads.Add(item);
+            }
+            //threads = App.ApiService.GetThreads().Result;
         }
 
         public Task<bool> AddItemAsync(ThreadItem item)
@@ -33,7 +42,7 @@ namespace citizen.Services
 
         public async Task<IEnumerable<ThreadItem>> GetItemsAsync(bool forceRefresh = false)
         {
-            return await App.ApiService.GetThreads();
+            return await Task.FromResult(threads);
         }
 
         public Task<bool> UpdateItemAsync(ThreadItem item)

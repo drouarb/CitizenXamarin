@@ -48,10 +48,16 @@ namespace citizen.Services
         {
             var uri = new Uri(string.Format("https://citizen.navispeed.eu/api/threads", string.Empty));
 
+
             Log.Warning("GetThreads", "CALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Token");
+
+            Log.Warning("GetThreads", "HEADERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
+
             HttpResponseMessage response = await _httpClient.GetAsync(uri);
+
+            Log.Warning("GetThreads", response.ToString());
 
             if (response.IsSuccessStatusCode)
             {
