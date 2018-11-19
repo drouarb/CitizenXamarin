@@ -2,8 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using citizen.Models;
+using citizen.Models.Api;
 using citizen.Services;
+using citizen.Services.Api;
 using Xamarin.Forms;
 
 namespace citizen.ViewModels
@@ -12,7 +13,7 @@ namespace citizen.ViewModels
     {
         public Command LoadPollsCommand { get; set; }
         public ObservableCollection<PollItem> Polls { get; set; }
-        public IDataStore<PollItem> PollStore => DependencyService.Get<IDataStore<PollItem>>();
+        public PollService PollService = new PollService();
 
         public PollViewModel()
         {
@@ -31,7 +32,7 @@ namespace citizen.ViewModels
             try
             {
                 Polls.Clear();
-                var items = await PollStore.GetItemsAsync(true);
+                var items = await PollService.GetItemsAsync(true);
                 foreach (var item in items)
                 {
                     Polls.Add(item);
