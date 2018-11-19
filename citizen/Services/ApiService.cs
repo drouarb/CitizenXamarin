@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Text;
 using citizen.Models.Api;
 using citizen.Models;
 using Newtonsoft.Json;
@@ -44,16 +45,42 @@ namespace citizen.Services
             return true;
         }
 
-        public async Task<string> ApiRequest(string url, HttpMethod verb)
+        public async Task<bool> RefreshToken()
         {
-            //TODO Implement Authentication Check
+            var values = new List<KeyValuePair<string, string>>();
+            values.Add(new KeyValuePair<string, string>("refresh_token", _authenticationResponse.refreshToken));
+            values.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "Y2l0aXplbjpzZWNyZXQ=");
+            HttpResponseMessage resp = await _httpClient.PostAsync("https://oauth.citizen.navispeed.eu/oauth/token", new FormUrlEncodedContent(values));
+            if (!resp.IsSuccessStatusCode)
+                return false;
+
+            _authenticationResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await resp.Content.ReadAsStringAsync());
+            return true;
+        }
+
+        public async Task<string> ApiRequest(string url, HttpMethod verb, String JSONBody)
+        {
             //Build the Request
             //TODO Implement custom body
+        
             HttpRequestMessage req = new HttpRequestMessage(verb, url);
+            if (JSONBody != null)
+                req.Content = new StringContent(JSONBody, Encoding.UTF8, "application/json");
             
+            /* testing refresh token
+             * to be removed in final release
+             */
+            Console.WriteLine("access token: " + _authenticationResponse.accessToken);
+            Console.WriteLine("does refresh token work ? " + await RefreshToken());
+            Console.WriteLine("access token: " + _authenticationResponse.accessToken);
+
+            //req.Content = new StringContent("test");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authenticationResponse.accessToken);
             HttpResponseMessage resp = await _httpClient.SendAsync(req);
-
+            if (resp.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                if (await RefreshToken())
+                    return ApiRequest(url, verb, JSONBody).Result;
            //TODO Check Result
             return await resp.Content.ReadAsStringAsync();
         }
