@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using citizen.Models;
+using citizen.Models.Api;
 
-namespace citizen.Services
+/*namespace citizen.Services
 {
     public class ThreadStore : IDataStore<ThreadItem>
     {
@@ -15,7 +15,7 @@ namespace citizen.Services
             threads = new List<ThreadItem>();
             var mockItems = new List<ThreadItem>
             {
-                new ThreadItem { uuid = Guid.NewGuid(), name = "First item", creationDate=new DateTime() },
+                new ThreadItem { Uuid = Guid.NewGuid(), Name = "First item", CreationDate = new DateTime() },
             };
 
             foreach (var item in mockItems)
@@ -35,12 +35,12 @@ namespace citizen.Services
             throw new NotImplementedException();
         }
 
-        public Task<ThreadItem> GetItemAsync(string id)
+        public Task<ThreadItem> GetThreadAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ThreadItem>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<ThreadItem>> GetThreadsAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(threads);
         }
@@ -50,4 +50,4 @@ namespace citizen.Services
             throw new NotImplementedException();
         }
     }
-}
+}*/
