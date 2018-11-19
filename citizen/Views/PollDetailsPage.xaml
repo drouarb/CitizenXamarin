@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="citizen.Views.PollDetailsPage" Title="{Binding Title}">
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
+             x:Class="citizen.Views.PollDetailsPage" Title="{Binding Title}">
     <StackLayout Spacing="20" Padding="15">
         <Label Text="Description:" FontSize="Medium" />
         <Label Text="{Binding Poll.Details}" FontSize="Small" />
+        <flex:FlexButton
+            HeightRequest="40"
+            CornerRadius="20"                    
+            Text="Pill Button"
+            FontSize="Small"                    
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="Start"
+            ForegroundColor="#ffffff"
+            HighlightForegroundColor="#49516F"
+            BackgroundColor="#6279B8"
+            HighlightBackgroundColor="#8EA4D2"/>
     </StackLayout>
 </ContentPage>
