@@ -12,9 +12,9 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Padding="10">
-                                <Label Text="{Binding name}" LineBreakMode="NoWrap"
+                                <Label Text="{Binding Topic}" LineBreakMode="NoWrap"
                                        Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
-                                <Label Text="{Binding creationDate}" LineBreakMode="NoWrap"
+                                <Label Text="{Binding Created}" LineBreakMode="NoWrap"
                                        Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
                             </StackLayout>
                         </ViewCell>

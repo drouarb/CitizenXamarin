@@ -21,7 +21,7 @@ namespace citizen.Services.Api
             if (forceRefresh == false && polls.Count != 0)
                 return await Task.FromResult(polls);
 
-            string rawPolls = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll", HttpMethod.Get);
+            string rawPolls = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll", HttpMethod.Get, null);
             Console.WriteLine(rawPolls);
             polls = JsonConvert.DeserializeObject<List<PollItem>>(rawPolls);
             Console.WriteLine(polls.Count);

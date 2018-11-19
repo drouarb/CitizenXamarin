@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using citizen.Models.Api;
-using citizen.Services;
 using citizen.Services.Api;
 using Xamarin.Forms;
 

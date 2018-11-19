@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using citizen.Models;
-using citizen.Services;
+using citizen.Models.Api;
+using citizen.Services.Api;
 using Xamarin.Forms;
 
 namespace citizen.ViewModels
@@ -12,6 +12,7 @@ namespace citizen.ViewModels
     {
         public Command LoadTopicCommand { get; set; }
         public ObservableCollection<ThreadItem> Threads { get; set; }
+        public AgoraService AgoraService = new AgoraService();
 
         public ForumTopicViewModel ()
 		{
@@ -22,7 +23,6 @@ namespace citizen.ViewModels
 
         async Task ExecuteLoadThreadCommand()
         {
-            Xamarin.Forms.Internals.Log.Warning("CAT","##################################### TEST");
             if (IsBusy)
                 return;
 
@@ -31,8 +31,9 @@ namespace citizen.ViewModels
             try
             {
                 Threads.Clear();
-                var items = await ThreadStore.GetItemsAsync(true);
-                foreach (var item in items)
+                Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
+                var threads = await AgoraService.GetThreadsAsync(true);
+                foreach (var item in threads)
                 {
                     Threads.Add(item);
                 }
