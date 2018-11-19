@@ -13,11 +13,12 @@ namespace citizen.Services.Api
         
         public PollService()
         {
+            polls = new List<PollItem>();
         }
 
         public async Task<IEnumerable<PollItem>> GetItemsAsync(bool forceRefresh = false)
         {
-            if (!forceRefresh)
+            if (forceRefresh == false && polls.Count != 0)
                 return await Task.FromResult(polls);
 
             string rawPolls = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll", HttpMethod.Get);

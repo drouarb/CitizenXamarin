@@ -13,6 +13,7 @@ namespace citizen.Views
             InitializeComponent();
 
             BindingContext = new PollViewModel();
+            PollListView.BeginRefresh();
         }
         
         async void OnPollSelected(object sender, SelectedItemChangedEventArgs args)
