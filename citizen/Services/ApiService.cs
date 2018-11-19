@@ -59,11 +59,10 @@ namespace citizen.Services
             return true;
         }
 
-        public async Task<string> ApiRequest(string url, HttpMethod verb, String JSONBody)
+        public async Task<string> ApiRequest(string url, HttpMethod verb, String JSONBody = null)
         {
             //Build the Request
             //TODO Implement custom body
-        
             HttpRequestMessage req = new HttpRequestMessage(verb, url);
             if (JSONBody != null)
                 req.Content = new StringContent(JSONBody, Encoding.UTF8, "application/json");
@@ -83,32 +82,6 @@ namespace citizen.Services
                     return ApiRequest(url, verb, JSONBody).Result;
            //TODO Check Result
             return await resp.Content.ReadAsStringAsync();
-        }
-
-        public async Task<List<ThreadItem>> GetThreads()
-        {
-            var uri = new Uri(string.Format("https://citizen.navispeed.eu/api/threads", string.Empty));
-
-
-            Log.Warning("GetThreads", "CALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Token");
-
-            Log.Warning("GetThreads", "HEADERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
-
-            HttpResponseMessage response = await _httpClient.GetAsync(uri);
-
-            Log.Warning("GetThreads", response.ToString());
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                Log.Warning("GetThreads", content);
-                return JsonConvert.DeserializeObject<List<ThreadItem>>(content);
-            }
-
-            // return response.StatusCode;
-            return null;
         }
     }
 }
