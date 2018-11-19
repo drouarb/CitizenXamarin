@@ -44,6 +44,20 @@ namespace citizen.Services
             return true;
         }
 
+        public async Task<string> ApiRequest(string url, HttpMethod verb)
+        {
+            //TODO Implement Authentication Check
+            //Build the Request
+            //TODO Implement custom body
+            HttpRequestMessage req = new HttpRequestMessage(verb, url);
+            
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authenticationResponse.accessToken);
+            HttpResponseMessage resp = await _httpClient.SendAsync(req);
+
+           //TODO Check Result
+            return await resp.Content.ReadAsStringAsync();
+        }
+
         public async Task<List<ThreadItem>> GetThreads()
         {
             var uri = new Uri(string.Format("https://citizen.navispeed.eu/api/threads", string.Empty));
