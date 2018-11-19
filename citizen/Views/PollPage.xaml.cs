@@ -26,7 +26,7 @@ namespace citizen.Views
 
             Console.WriteLine("Navigate to poll " + poll.Uuid);
 
-            await Navigation.PushAsync(new PollDetailPage(new PollDetailViewModel(poll)));
+            await Navigation.PushAsync(new PollDetailsPage(new PollDetailsViewModel(poll)));
             
             PollListView.SelectedItem = null;
         }

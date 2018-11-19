@@ -19,7 +19,7 @@
       <SubType>Designer</SubType>
       <Generator></Generator>
     </Page>
-    <Page Include="Views\PollDetailPage.xaml">
+    <Page Include="Views\PollDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator></Generator>
     </Page>
