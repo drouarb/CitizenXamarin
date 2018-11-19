@@ -12,7 +12,7 @@ namespace citizen.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        //public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
+        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
         //public IDataStore<ThreadItem> ThreadStore => DependencyService.Get<IDataStore<ThreadItem>>() ?? new ThreadStore();
 
         bool isBusy = false;

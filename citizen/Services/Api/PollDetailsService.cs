@@ -21,7 +21,7 @@ namespace citizen.Services.Api
             if (forceRefresh == false && choices.Count != 0)
                 return await Task.FromResult(choices);
 
-            string rawChoices = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll/poll/" + poll.Uuid + "/choices", HttpMethod.Get);
+            string rawChoices = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll/poll/" + poll.Uuid + "/choices", HttpMethod.Get, null);
             return await Task.FromResult(choices);
         }
     }
