@@ -12,7 +12,7 @@ namespace citizen.Views
     public partial class PollDetailsPage : ContentPage
     {
         PollDetailsViewModel viewModel;
-        private int choiceCount = 0;
+        private int _choiceCount = 0;
 
         public PollDetailsPage(PollDetailsViewModel viewModel)
         {
@@ -53,7 +53,7 @@ namespace citizen.Views
 
                     button.TouchedDown += HandleChoiceSelected;
                     
-                    PollChoicesGrid.Children.Add(button, 1, choiceCount++);
+                    PollChoicesGrid.Children.Add(button, 1, _choiceCount++);
                 }
 
                 SubmitGrid.IsVisible = true;

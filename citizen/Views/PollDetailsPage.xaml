@@ -3,41 +3,42 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
              x:Class="citizen.Views.PollDetailsPage" Title="{Binding Title}">
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="{Binding Poll.Proposition}" FontAttributes="Bold" FontSize="25" />
-        <Label Text="{Binding Poll.Details}" />
+    <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="{Binding Poll.Proposition}" FontAttributes="Bold" FontSize="25" />
+            <Label Text="{Binding Poll.Details}" />
 
-        <Grid x:Name="PollChoicesGrid" RowSpacing="20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="90*" />
-                <ColumnDefinition Width="5*" />
-            </Grid.ColumnDefinitions>
-            <ActivityIndicator IsRunning="True"
-                               IsVisible="True"
-                               Color="#2499CE" Grid.Column="1" />
-        </Grid>
-        <Grid RowSpacing="10" x:Name="SubmitGrid" IsVisible="False">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="90*" />
-                <ColumnDefinition Width="5*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1"  />
-                <RowDefinition Height="5" />
-                <RowDefinition Height="50" />
-            </Grid.RowDefinitions>
-            <BoxView BackgroundColor="LightGray" VerticalOptions="Fill" HorizontalOptions="Fill"
-                     Grid.Column="1" Grid.Row="0" />
-            <flex:FlexButton 
-                Grid.Column="1" 
-                Grid.Row="2"
-                VerticalOptions="FillAndExpand"
-                HorizontalOptions="FillAndExpand"
-                BackgroundColor="{StaticResource NavigationPrimary}"
-                Text="Valider"
-                />
-        </Grid>
-    </StackLayout>
+            <Grid x:Name="PollChoicesGrid" RowSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="90*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <ActivityIndicator IsRunning="True"
+                                   IsVisible="True"
+                                   Color="#2499CE" Grid.Column="1" />
+            </Grid>
+            <Grid RowSpacing="10" x:Name="SubmitGrid" IsVisible="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="90*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <BoxView BackgroundColor="LightGray" VerticalOptions="Fill" HorizontalOptions="Fill"
+                         Grid.Column="1" Grid.Row="0" />
+                <flex:FlexButton
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="{StaticResource NavigationPrimary}"
+                    Text="Valider" />
+            </Grid>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
