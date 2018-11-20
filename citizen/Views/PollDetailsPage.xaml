@@ -31,13 +31,19 @@
                 </Grid.RowDefinitions>
                 <BoxView BackgroundColor="LightGray" VerticalOptions="Fill" HorizontalOptions="Fill"
                          Grid.Column="1" Grid.Row="0" />
-                <flex:FlexButton
-                    Grid.Column="1"
-                    Grid.Row="2"
-                    VerticalOptions="FillAndExpand"
-                    HorizontalOptions="FillAndExpand"
-                    BackgroundColor="{StaticResource NavigationPrimary}"
-                    Text="Valider" />
+                <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.Column="1"
+                                Grid.Row="2">
+                    <flex:FlexButton
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        BackgroundColor="{StaticResource NavigationPrimary}"
+                        Clicked="HandleSubmit"
+                        Text="Valider" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                    <ActivityIndicator
+                        IsVisible="False"
+                        IsRunning="False"
+                        Color="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                </AbsoluteLayout>
             </Grid>
         </StackLayout>
     </ScrollView>

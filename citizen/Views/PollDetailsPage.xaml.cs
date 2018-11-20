@@ -60,6 +60,32 @@ namespace citizen.Views
             }
         }
 
+        private void HandleSubmit(object sender, EventArgs e)
+        {
+            int i = 0;
+            int selected = -1;
+            
+            foreach (var item in PollChoicesGrid.Children)
+            {
+                var button = item as Flex.Controls.FlexButton;
+                if (button == null)
+                    continue;
+
+                if (button.IsToggled)
+                    selected = i;
+                i++;
+            }
+
+            if (selected == -1)
+            {
+                //TODO Nothing selected
+                Console.WriteLine("Nothing selected");
+                return;
+            }
+            
+            Console.WriteLine("Selected " + selected);
+        }
+
         private void HandleChoiceSelected(object sender, EventArgs e)
         {
             var triggeredButton = sender as Flex.Controls.FlexButton;
