@@ -11,6 +11,7 @@ namespace citizen.Services.Api
     {
         private List<ThreadItem> threads;
         private List<PostItem> posts;
+        private ThreadItem tr;
 
         public AgoraService()
         {
@@ -19,24 +20,26 @@ namespace citizen.Services.Api
 
         public AgoraService(ThreadItem thread)
         {
-
+            tr = thread;
         }
 
-        public async Task<IEnumerable<PostItem>> GetThreadDetailsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<PostItem>> GetPostsAsync(bool forceRefresh = false)
         {
-            Console.WriteLine("get threads called bb");
+            if (forceRefresh == false && threads.Count != 0)
+                return posts;
+            Console.WriteLine("get post called bb");
             //TODO replace threads?pageNb=0&pageSize=100 by actual parameters
-            string rawPosts = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/threads?pageNb=0&pageSize=100", HttpMethod.Get, null);
+            string rawPosts = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/threads/thread/" + tr.Uuid + "/posts?pageNb=0&pageSize=100", HttpMethod.Get, null);
             Console.WriteLine("raw posts:" + rawPosts);
             posts = JsonConvert.DeserializeObject<List<PostItem>>(rawPosts);
-            Console.WriteLine("threads count" + threads.Count);
+            Console.WriteLine("post count" + posts.Count);
             return posts;
         }
 
         public async Task<IEnumerable<ThreadItem>> GetThreadsAsync(bool forceRefresh = false)
         {
             if (forceRefresh == false && threads.Count != 0)
-                return await Task.FromResult(threads);
+                return threads;
 
             Console.WriteLine("get threads called bb");
             //TODO replace threads?pageNb=0&pageSize=100 by actual parameters
@@ -49,7 +52,7 @@ namespace citizen.Services.Api
                 Console.WriteLine(thread.Topic);
                 Console.WriteLine(thread.Created);
             });
-            return await Task.FromResult(threads);
+            return threads;
         }
     }
 }

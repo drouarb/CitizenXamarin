@@ -10,13 +10,13 @@ namespace citizen.Models.Api
     {
         [JsonProperty("uuid")]
         public Guid Uuid { get; set; }
-        [JsonProperty("category")]
-        public string Category { get; set; }
+        [JsonProperty("thread_uuid")]
+        public string ThreadUuid { get; set; }
+        [JsonProperty("posted")]
+        public DateTime Created { get; set; }
         [JsonProperty("author")]
         public string Author { get; set; }
-        [JsonProperty("created")]
-        public DateTime Created { get; set; }
-        [JsonProperty("topic")]
-        public string Topic { get; set; }
+        [JsonProperty("message")]
+        public string Message { get; set; }
     }
 }

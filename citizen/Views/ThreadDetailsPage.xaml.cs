@@ -13,11 +13,13 @@ namespace citizen.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ThreadDetailsPage : ContentPage
 	{
-        ThreadDetailsViewModel viewModel;
+        PostViewModel viewModel;
 
-        public ThreadDetailsPage(ThreadDetailsViewModel viewModel)
+        public ThreadDetailsPage(PostViewModel viewModel)
         {
+            Console.Write("load view model");
             InitializeComponent();
+            Console.Write("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
             BindingContext = this.viewModel = viewModel;
         }
 	}

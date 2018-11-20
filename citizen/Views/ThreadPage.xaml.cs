@@ -25,11 +25,18 @@ namespace citizen.Views
             if (thread == null)
                 return;
 
+            try {
             Console.WriteLine("Navigate to thread " + thread.Uuid);
-
-            await Navigation.PushAsync(new ThreadDetailsPage(new ThreadDetailsViewModel(thread)));
+            var postview = new PostViewModel(thread);
+            Console.WriteLine("Ohhh sheeit " + postview == null);
+            var threadetails = new ThreadDetailsPage(postview);
+            Console.WriteLine("nigguh");
+            await Navigation.PushAsync(new ThreadDetailsPage(new PostViewModel(thread)));
 
             ThreadListView.SelectedItem = null;
+            } catch (Exception e) {
+                Console.WriteLine("exception exception" + e.Message); 
+            }
         }
 
         protected override void OnAppearing()
