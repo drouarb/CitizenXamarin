@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using citizen.Models.Api;
+using Newtonsoft.Json;
 
 namespace citizen.Services.Api
 {
@@ -19,10 +21,14 @@ namespace citizen.Services.Api
         public async Task<IEnumerable<PollChoice>> GetItemsAsync(bool forceRefresh = false)
         {
             if (forceRefresh == false && choices.Count != 0)
-                return await Task.FromResult(choices);
+                return choices;
 
             string rawChoices = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll/poll/" + poll.Uuid + "/choices", HttpMethod.Get, null);
-            return await Task.FromResult(choices);
+            Console.WriteLine(rawChoices);
+            choices = JsonConvert.DeserializeObject<List<PollChoice>>(rawChoices);
+            Console.WriteLine(choices.Count);
+            choices.ForEach(choice => Console.WriteLine(choice.Uuid + " " + choice.Text));
+            return choices;
         }
     }
 }

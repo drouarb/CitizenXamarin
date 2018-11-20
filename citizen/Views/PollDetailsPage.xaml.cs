@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Specialized;
+using citizen.Models.Api;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,12 +12,74 @@ namespace citizen.Views
     public partial class PollDetailsPage : ContentPage
     {
         PollDetailsViewModel viewModel;
+        private int choiceCount = 0;
 
         public PollDetailsPage(PollDetailsViewModel viewModel)
         {
             InitializeComponent();
 
             BindingContext = this.viewModel = viewModel;
+            viewModel.PollChoices.CollectionChanged += HandleChoiceChange;
+        }
+
+        private void HandleChoiceChange(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (var choiceObj in e.NewItems)
+                {
+                    var choice = choiceObj as PollChoice;
+                    Console.WriteLine(choice.Text);
+                    var PrimaryColor = (Color)App.Current.Resources["NavigationPrimary"];
+                    var button = new Flex.Controls.FlexButton();
+                    button.HorizontalOptions = LayoutOptions.Fill;
+                    button.Text = choice.Text;
+                    button.CornerRadius = 15;
+                    button.HeightRequest = 50;
+                    //Default color
+                    button.ForegroundColor = PrimaryColor;
+                    button.BackgroundColor = Color.White;
+            
+                    //Pressed color
+                    button.HighlightBackgroundColor = PrimaryColor;
+                    button.HighlightForegroundColor = Color.White;
+
+                    //Define the border
+                    button.BorderColor = PrimaryColor;
+                    button.HighlightBorderColor = PrimaryColor;
+                    button.BorderThickness = 3;
+
+                    button.ToggleMode = true;
+
+                    button.TouchedDown += HandleChoiceSelected;
+                    
+                    PollChoicesGrid.Children.Add(button, 1, choiceCount++);
+                }
+            }
+        }
+
+        private void HandleChoiceSelected(object sender, EventArgs e)
+        {
+            var triggeredButton = sender as Flex.Controls.FlexButton;
+            if (triggeredButton == null)
+                return;
+            
+            foreach (var item in PollChoicesGrid.Children)
+            {
+                var button = item as Flex.Controls.FlexButton;
+                if (button == null || button == triggeredButton)
+                    continue;
+
+                button.IsToggled = false;
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (viewModel.PollChoices.Count == 0)
+                viewModel.LoadChoicesCommand.Execute(null);
         }
     }
 }

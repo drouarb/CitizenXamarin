@@ -4,18 +4,18 @@
              xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
              x:Class="citizen.Views.PollDetailsPage" Title="{Binding Title}">
     <StackLayout Spacing="20" Padding="15">
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Poll.Details}" FontSize="Small" />
-        <flex:FlexButton
-            HeightRequest="40"
-            CornerRadius="20"                    
-            Text="Pill Button"
-            FontSize="Small"                    
-            HorizontalOptions="CenterAndExpand"
-            VerticalOptions="Start"
-            ForegroundColor="#ffffff"
-            HighlightForegroundColor="#49516F"
-            BackgroundColor="#6279B8"
-            HighlightBackgroundColor="#8EA4D2"/>
+        <Label Text="{Binding Poll.Proposition}" FontAttributes="Bold" FontSize="25" />
+        <Label Text="{Binding Poll.Details}" />
+
+        <Grid x:Name="PollChoicesGrid" RowSpacing="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="90*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <ActivityIndicator IsRunning="True"
+                               IsVisible="True"
+                               Color="#2499CE" Grid.Column="1" />
+        </Grid>
     </StackLayout>
 </ContentPage>

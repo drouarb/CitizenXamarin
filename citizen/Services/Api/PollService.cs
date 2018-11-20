@@ -19,7 +19,7 @@ namespace citizen.Services.Api
         public async Task<IEnumerable<PollItem>> GetItemsAsync(bool forceRefresh = false)
         {
             if (forceRefresh == false && polls.Count != 0)
-                return await Task.FromResult(polls);
+                return polls;
 
             string rawPolls = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll", HttpMethod.Get, null);
             Console.WriteLine(rawPolls);
@@ -30,7 +30,7 @@ namespace citizen.Services.Api
                 Console.WriteLine(poll.Proposition);
                 Console.WriteLine(poll.Details);
             });
-            return await Task.FromResult(polls);
+            return polls;
         }
     }
 }
