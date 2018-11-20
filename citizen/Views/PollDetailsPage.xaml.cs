@@ -55,6 +55,8 @@ namespace citizen.Views
                     
                     PollChoicesGrid.Children.Add(button, 1, choiceCount++);
                 }
+
+                SubmitGrid.IsVisible = true;
             }
         }
 
