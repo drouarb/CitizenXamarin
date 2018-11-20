@@ -10,10 +10,27 @@ namespace citizen.Services.Api
     public class AgoraService
     {
         private List<ThreadItem> threads;
+        private List<PostItem> posts;
 
         public AgoraService()
         {
             threads = new List<ThreadItem>();
+        }
+
+        public AgoraService(ThreadItem thread)
+        {
+
+        }
+
+        public async Task<IEnumerable<PostItem>> GetThreadDetailsAsync(bool forceRefresh = false)
+        {
+            Console.WriteLine("get threads called bb");
+            //TODO replace threads?pageNb=0&pageSize=100 by actual parameters
+            string rawPosts = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/threads?pageNb=0&pageSize=100", HttpMethod.Get, null);
+            Console.WriteLine("raw posts:" + rawPosts);
+            posts = JsonConvert.DeserializeObject<List<PostItem>>(rawPosts);
+            Console.WriteLine("threads count" + threads.Count);
+            return posts;
         }
 
         public async Task<IEnumerable<ThreadItem>> GetThreadsAsync(bool forceRefresh = false)

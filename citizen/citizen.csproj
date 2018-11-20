@@ -27,10 +27,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ThreadPage.xaml.cs">
+      <DependentUpon>ThreadPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ThreadDetailsPage.xaml.cs">
+      <DependentUpon>ThreadDetailsPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Services\View1.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ForumPage.xaml">
+    <EmbeddedResource Update="Views\ThreadPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\NewsPage.xaml">
@@ -38,6 +47,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PollDetailsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ThreadDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 </Project>
