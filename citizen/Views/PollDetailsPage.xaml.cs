@@ -55,8 +55,6 @@ namespace citizen.Views
                     
                     PollChoicesGrid.Children.Add(button, 1, _choiceCount++);
                 }
-
-                SubmitGrid.IsVisible = true;
             }
         }
 
@@ -99,6 +97,12 @@ namespace citizen.Views
                     continue;
 
                 button.IsToggled = false;
+            }
+
+            if (!SubmitGrid.IsVisible)
+            {
+                SubmitGrid.IsVisible = true;
+                PollScrollView.ScrollToAsync(0, PollStackLayout.Height - PollScrollView.Height + 100, true);
             }
         }
 
