@@ -38,6 +38,7 @@
                         VerticalOptions="FillAndExpand"
                         HorizontalOptions="FillAndExpand"
                         BackgroundColor="{StaticResource NavigationPrimary}"
+                        HighlightBackgroundColor="{StaticResource NavigationSecondary}"
                         Clicked="HandleSubmit"
                         Text="Valider" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
                     <ActivityIndicator
