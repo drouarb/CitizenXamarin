@@ -30,5 +30,17 @@ namespace citizen.Services.Api
             choices.ForEach(choice => Console.WriteLine(choice.Uuid + " " + choice.Text));
             return choices;
         }
+
+        public async Task Vote(PollChoice choice)
+        {
+            PollResult pollResult = new PollResult();
+            pollResult.ResultUuid = choice.Uuid.ToString();
+            string body = JsonConvert.SerializeObject(pollResult);
+
+            Console.WriteLine(body);
+            string resp = await App.ApiService.ApiRequest(
+                "https://citizen.navispeed.eu/api/poll/poll/" + choice.PollUuid + "/results", HttpMethod.Post, body);
+            Console.WriteLine(resp);
+        }
     }
 }

@@ -26,6 +26,13 @@ namespace citizen.ViewModels
             pollDetailsService = new PollDetailsService(poll);
         }
 
+        public async Task ExecuteVote(int selectedId)
+        {
+            PollChoice choice = PollChoices[selectedId];
+
+            await pollDetailsService.Vote(choice);
+        }
+
         public async Task ExecuteLoadChoicesCommand()
         {
             if (IsBusy)

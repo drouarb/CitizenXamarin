@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
 using citizen.Models.Api;
+using citizen.Services.Api;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -58,7 +60,7 @@ namespace citizen.Views
             }
         }
 
-        private void HandleSubmit(object sender, EventArgs e)
+        private async Task HandleSubmit(object sender, EventArgs e)
         {
             int i = 0;
             int selected = -1;
@@ -82,6 +84,7 @@ namespace citizen.Views
             }
             
             Console.WriteLine("Selected " + selected);
+            await viewModel.ExecuteVote(selected);
         }
 
         private void HandleChoiceSelected(object sender, EventArgs e)
