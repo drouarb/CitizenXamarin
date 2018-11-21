@@ -104,9 +104,14 @@ namespace citizen.Views
 
             if (!SubmitGrid.IsVisible)
             {
+                PollStackLayout.SizeChanged += HandleSubmitAppear;
                 SubmitGrid.IsVisible = true;
-                PollScrollView.ScrollToAsync(0, PollStackLayout.Height - PollScrollView.Height + 100, true);
             }
+        }
+
+        public void HandleSubmitAppear(object sender, EventArgs e)
+        {
+            PollScrollView.ScrollToAsync(0, PollStackLayout.Height - PollScrollView.Height, true);                
         }
 
         protected override void OnAppearing()
