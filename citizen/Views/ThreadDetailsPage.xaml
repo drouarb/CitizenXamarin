@@ -22,9 +22,10 @@
         <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
             <Editor x:Name="UserPost" Keyboard="Chat"/>
             <flex:FlexButton
-                        VerticalOptions="FillAndExpand"
+                        VerticalOptions="Center"
                         BackgroundColor="{StaticResource NavigationPrimary}"
                         Clicked="HandleSubmit"
+                        HeightRequest="40"
                         Text="Envoyer" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"></flex:FlexButton>
         </StackLayout>
     </StackLayout>
