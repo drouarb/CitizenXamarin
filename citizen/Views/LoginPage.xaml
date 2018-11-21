@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
              x:Class="citizen.Views.LoginPage">
     <ContentPage.Content>
         <Grid>
@@ -22,9 +23,17 @@
                     <Label x:Name="MessageLabel" Opacity="0" Text="Label" TextColor="Red" HorizontalTextAlignment="Center" />
 
                     <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-                        <Button x:Name="LoginButton" Text="Login" Clicked="OnLoginButtonClicked"
-                                BackgroundColor="{StaticResource NavigationPrimary}" TextColor="White" 
-                                AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                        <flex:FlexButton
+                            x:Name="LoginButton"
+                            Text="Login"
+                            HeightRequest="45"
+                            CornerRadius="3"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="{StaticResource NavigationPrimary}"
+                            HighlightBackgroundColor="{StaticResource NavigationSecondary}"
+                            Clicked="OnLoginButtonClicked"
+                            AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
                         <ActivityIndicator
                             IsVisible="{Binding IsBusy}"
                             IsRunning="{Binding IsBusy}"

@@ -39,6 +39,7 @@ namespace citizen.Views
             
                 LoginButton.IsEnabled = true;
                 _loginViewModel.IsBusy = false;
+                LoginButton.Text = "Login";
             }
         }
     }
