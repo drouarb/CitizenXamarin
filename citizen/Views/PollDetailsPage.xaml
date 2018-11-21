@@ -34,14 +34,15 @@
                 <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.Column="1"
                                 Grid.Row="2">
                     <flex:FlexButton
+                        x:Name="SubmitButton"
                         VerticalOptions="FillAndExpand"
                         HorizontalOptions="FillAndExpand"
                         BackgroundColor="{StaticResource NavigationPrimary}"
                         Clicked="HandleSubmit"
                         Text="Valider" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
                     <ActivityIndicator
-                        IsVisible="False"
-                        IsRunning="False"
+                        IsVisible="{Binding IsBusy}"
+                        IsRunning="{Binding IsBusy}"
                         Color="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
                 </AbsoluteLayout>
             </Grid>

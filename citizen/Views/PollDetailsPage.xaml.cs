@@ -22,6 +22,7 @@ namespace citizen.Views
 
             BindingContext = this.viewModel = viewModel;
             viewModel.PollChoices.CollectionChanged += HandleChoiceChange;
+            viewModel.VoteCommand.CanExecuteChanged += HandleVoteExecuted;
         }
 
         private void HandleChoiceChange(object sender, NotifyCollectionChangedEventArgs e)
@@ -60,7 +61,7 @@ namespace citizen.Views
             }
         }
 
-        private async Task HandleSubmit(object sender, EventArgs e)
+        private void HandleSubmit(object sender, EventArgs e)
         {
             int i = 0;
             int selected = -1;
@@ -84,7 +85,16 @@ namespace citizen.Views
             }
             
             Console.WriteLine("Selected " + selected);
-            await viewModel.ExecuteVote(selected);
+            if (!viewModel.IsBusy)
+            {
+                SubmitButton.Text = "";
+                viewModel.VoteCommand.Execute(selected);
+            }
+        }
+
+        private void HandleVoteExecuted(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
         }
 
         private void HandleChoiceSelected(object sender, EventArgs e)

@@ -14,6 +14,7 @@ namespace citizen.ViewModels
         public PollItem Poll { get; set; }
         public ObservableCollection<PollChoice> PollChoices { get; set; }
         public Command LoadChoicesCommand { get; set; }
+        public Command<int> VoteCommand { get; set; }
 
         private PollDetailsService pollDetailsService;
 
@@ -23,14 +24,17 @@ namespace citizen.ViewModels
             Title = poll.Proposition;
             PollChoices = new ObservableCollection<PollChoice>();
             LoadChoicesCommand = new Command(async () => await ExecuteLoadChoicesCommand());
+            VoteCommand = new Command<int>(async s => await ExecuteVote(s));
             pollDetailsService = new PollDetailsService(poll);
         }
 
         public async Task ExecuteVote(int selectedId)
         {
+            IsBusy = true;
             PollChoice choice = PollChoices[selectedId];
-
             await pollDetailsService.Vote(choice);
+            //VoteBusy = false;
+            VoteCommand.ChangeCanExecute();
         }
 
         public async Task ExecuteLoadChoicesCommand()
