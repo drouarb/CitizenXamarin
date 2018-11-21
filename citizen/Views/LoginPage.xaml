@@ -28,7 +28,7 @@
                         <ActivityIndicator
                             IsVisible="{Binding IsBusy}"
                             IsRunning="{Binding IsBusy}"
-                            Color="Black" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                            Color="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
                     </AbsoluteLayout>
                 </StackLayout>
         </Grid>
