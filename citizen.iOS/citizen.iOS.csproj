@@ -145,4 +145,9 @@
       <Name>citizen</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\send%402x.png" />
+    <BundleResource Include="Resources\send%403x.png" />
+    <BundleResource Include="Resources\send.png" />
+  </ItemGroup>
 </Project>

@@ -31,7 +31,7 @@ namespace citizen.Services.Api
 
         public async Task<IEnumerable<PostItem>> GetPostsAsync(bool forceRefresh = false)
         {
-            if (forceRefresh == false && threads.Count != 0)
+            if (forceRefresh == false && posts.Count != 0)
                 return posts;
             Console.WriteLine("get post called bb");
             //TODO replace threads?pageNb=0&pageSize=100 by actual parameters

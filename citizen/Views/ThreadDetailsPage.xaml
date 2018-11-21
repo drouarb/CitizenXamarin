@@ -1,11 +1,14 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
              x:Class="citizen.Views.ThreadDetailsPage" Title="{Binding Title}">
-	<StackLayout Spacing="20" Padding="15">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
         <ListView x:Name="PostListView" ItemsSource="{Binding Posts}" VerticalOptions="FillAndExpand"
                       HasUnevenRows="true" RefreshCommand="{Binding LoadPostCommand}" IsPullToRefreshEnabled="true"
-                      IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement">
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement" Grid.Row="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -19,14 +22,21 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
-            <Editor x:Name="UserPost" Keyboard="Chat"/>
-            <flex:FlexButton
-                        VerticalOptions="Center"
-                        BackgroundColor="{StaticResource NavigationPrimary}"
-                        Clicked="HandleSubmit"
-                        HeightRequest="40"
-                        Text="Envoyer" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"></flex:FlexButton>
-        </StackLayout>
-    </StackLayout>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80*"  />
+                <ColumnDefinition Width="20*" />
+            </Grid.ColumnDefinitions>
+            <Editor x:Name="UserPost" Grid.Column="0"/>
+            <flex:FlexButton Grid.Column="1"         
+                             VerticalOptions="FillAndExpand"
+                             BackgroundColor="{StaticResource NavigationPrimary}"
+                             Clicked="HandleSubmit"
+                             Icon="send.png"
+                             Padding="5"></flex:FlexButton>
+        </Grid>
+    </Grid>
 </ContentPage>
