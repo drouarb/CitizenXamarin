@@ -23,6 +23,12 @@ namespace citizen.Services.Api
             tr = thread;
         }
 
+        public async Task<String> PostPostAsync(String post)
+        {
+            string rawValue = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/threads/posts?tid=" + tr.Uuid + "&author=user&message=" + post, HttpMethod.Post, null);
+            return rawValue;
+        }
+
         public async Task<IEnumerable<PostItem>> GetPostsAsync(bool forceRefresh = false)
         {
             if (forceRefresh == false && threads.Count != 0)

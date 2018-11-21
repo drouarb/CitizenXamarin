@@ -27,6 +27,11 @@ namespace citizen.ViewModels
             LoadPostCommand = new Command(async () => await ExecuteLoadPostCommand());
         }
 
+        internal async Task ExecuteSubmitPostAsync(string UserPost)
+        {
+            await AgoraService.PostPostAsync(UserPost);
+        }
+
         async Task ExecuteLoadPostCommand()
         {
             Console.Write("execute\n");

@@ -3,21 +3,29 @@
              xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
              x:Class="citizen.Views.ThreadDetailsPage" Title="{Binding Title}">
 	<StackLayout Spacing="20" Padding="15">
-		<ListView x:Name="PostListView" ItemsSource="{Binding Posts}" VerticalOptions="FillAndExpand"
+        <ListView x:Name="PostListView" ItemsSource="{Binding Posts}" VerticalOptions="FillAndExpand"
                       HasUnevenRows="true" RefreshCommand="{Binding LoadPostCommand}" IsPullToRefreshEnabled="true"
                       IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement">
-			<ListView.ItemTemplate>
-				<DataTemplate>
-					<ViewCell>
-						<StackLayout Padding="10">
-							<Label Text="{Binding Author}" LineBreakMode="NoWrap"
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Author}" LineBreakMode="NoWrap"
                                        FontSize="16" />
-							<Label Text="{Binding Message}" LineBreakMode="NoWrap"
+                            <Label Text="{Binding Message}" LineBreakMode="NoWrap"
                                        FontSize="13" />
-						</StackLayout>
-					</ViewCell>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>
-	</StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+            <Editor x:Name="UserPost" Keyboard="Chat"/>
+            <flex:FlexButton
+                        VerticalOptions="FillAndExpand"
+                        BackgroundColor="{StaticResource NavigationPrimary}"
+                        Clicked="HandleSubmit"
+                        Text="Envoyer" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1"></flex:FlexButton>
+        </StackLayout>
+    </StackLayout>
 </ContentPage>

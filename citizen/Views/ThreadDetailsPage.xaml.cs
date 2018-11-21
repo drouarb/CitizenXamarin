@@ -17,10 +17,16 @@ namespace citizen.Views
 
         public ThreadDetailsPage(PostViewModel viewModel)
         {
-            Console.Write("load view model");
             InitializeComponent();
-            Console.Write("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
             BindingContext = this.viewModel = viewModel;
+            UserPost.AutoSize = EditorAutoSizeOption.TextChanges;
+            PostListView.BeginRefresh();
         }
-	}
+
+        private async Task HandleSubmit(object sender, EventArgs e)
+        {
+            await viewModel.ExecuteSubmitPostAsync(UserPost.Text);
+            PostListView.BeginRefresh();
+        }
+    }
 }
