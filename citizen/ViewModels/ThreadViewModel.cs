@@ -10,7 +10,7 @@ namespace citizen.ViewModels
 {
 	public class ThreadViewModel : BaseViewModel
     {
-        public Command LoadTopicCommand { get; set; }
+        public Command LoadThreadCommand { get; set; }
         public ObservableCollection<ThreadItem> Threads { get; set; }
         public AgoraService AgoraService = new AgoraService();
 
@@ -18,16 +18,17 @@ namespace citizen.ViewModels
 		{
             Title = "Agora";
             Threads = new ObservableCollection<ThreadItem>();
-            LoadTopicCommand = new Command(async () => await ExecuteLoadThreadCommand());
+            LoadThreadCommand = new Command(async () => await ExecuteLoadThreadCommand());
         }
 
         async Task ExecuteLoadThreadCommand()
         {
+            Console.Write("here we go");
             if (IsBusy)
                 return;
 
             IsBusy = true;
-
+            Console.Write("woooOOOOO");
             try
             {
                 Threads.Clear();
@@ -46,6 +47,7 @@ namespace citizen.ViewModels
             {
                 IsBusy = false;
             }
+            Console.Write("we lid it");
         }
     }
 }

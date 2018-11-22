@@ -58,6 +58,7 @@ namespace citizen.ViewModels
             {
                 IsBusy = false;
             }
+            Console.Write("we did it\n");
         }
     }
 }

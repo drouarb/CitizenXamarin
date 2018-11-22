@@ -44,7 +44,7 @@ namespace citizen.Views
             base.OnAppearing();
 
             if (viewModel.Threads.Count == 0)
-                viewModel.LoadTopicCommand.Execute(null);
+                viewModel.LoadThreadCommand.Execute(null);
         }
     }
 }
