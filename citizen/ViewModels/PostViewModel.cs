@@ -14,6 +14,7 @@ namespace citizen.ViewModels
         public ObservableCollection<PostItem> Posts { get; set; }
         private AgoraService AgoraService;
         public Command LoadPostCommand { get; set; }
+        public Command SendPostCommand { get; set; }
 
         public PostViewModel(ThreadItem thread)
         {
@@ -25,11 +26,13 @@ namespace citizen.ViewModels
             Console.Write("yepyepyepyep\n");
             Posts = new ObservableCollection<PostItem>();
             LoadPostCommand = new Command(async () => await ExecuteLoadPostCommand());
+            SendPostCommand = new Command<String>(async (UserPost) => await ExecuteSubmitPostAsync(UserPost));
         }
 
         internal async Task ExecuteSubmitPostAsync(string UserPost)
         {
             await AgoraService.PostPostAsync(UserPost);
+            await ExecuteLoadPostCommand();
         }
 
         async Task ExecuteLoadPostCommand()

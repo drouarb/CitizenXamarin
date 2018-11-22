@@ -24,6 +24,7 @@ namespace citizen.ViewModels
             Title = poll.Proposition;
             PollChoices = new ObservableCollection<PollChoice>();
             LoadChoicesCommand = new Command(async () => await ExecuteLoadChoicesCommand());
+     
             VoteCommand = new Command<int>(async s => await ExecuteVote(s));
             pollDetailsService = new PollDetailsService(poll);
         }

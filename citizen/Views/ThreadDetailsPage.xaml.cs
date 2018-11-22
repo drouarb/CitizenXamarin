@@ -23,10 +23,12 @@ namespace citizen.Views
             PostListView.BeginRefresh();
         }
 
-        private async Task HandleSubmit(object sender, EventArgs e)
+        private void HandleSubmit(object sender, EventArgs e)
         {
-            await viewModel.ExecuteSubmitPostAsync(UserPost.Text);
-            PostListView.BeginRefresh();
+            if (!viewModel.IsBusy) {
+                viewModel.SendPostCommand.Execute(UserPost.Text);
+                UserPost.Text = "";
+            }
         }
     }
 }
