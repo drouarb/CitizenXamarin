@@ -1,10 +1,6 @@
-﻿using citizen.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System;
+using citizen.Models.Api;
+using citizen.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,9 +17,18 @@ namespace citizen.Views
             NewsListView.BeginRefresh();
         }
 
-        private void NewsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        async void NewsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            var news = e.SelectedItem as NewsItem;
 
+            if (news == null)
+                return;
+
+            Console.WriteLine("Navigate to news " + news.Uuid);
+
+            await Navigation.PushAsync(new NewsDetailsView(new NewsDetailsViewModel(news)));
+
+            NewsListView.SelectedItem = null;
         }
     }
 }
