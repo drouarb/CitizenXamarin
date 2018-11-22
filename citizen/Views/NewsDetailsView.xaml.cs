@@ -20,6 +20,13 @@ namespace citizen.Views
 			InitializeComponent ();
 
             BindingContext = this.viewModel = viewModel;
-		}
-	}
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            viewModel.LoadNewsDetailsCommand.Execute(null);
+        }
+    }
 }
