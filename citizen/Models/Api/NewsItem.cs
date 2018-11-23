@@ -5,7 +5,7 @@ using System.Text;
 
 namespace citizen.Models.Api
 {
-    class NewsItem
+    public class NewsItem
     {
         [JsonProperty("uuid")]
         public Guid Uuid { get; set; }
