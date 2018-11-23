@@ -1,9 +1,7 @@
 ﻿using citizen.Models.Api;
 using citizen.Services.Api;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
