@@ -21,16 +21,8 @@ namespace citizen.Services.Api
         {
             if (forceRefresh == false && news.Count != 0)
                 return await Task.FromResult(news);
-            Console.WriteLine("CALLLLLLLLLLLLLLLLLLLLLLLLL NEWS");
             string rawNews = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/news", HttpMethod.Get);
-            Console.WriteLine("raw news:" + rawNews);
             news = JsonConvert.DeserializeObject<List<NewsItem>>(rawNews);
-            Console.WriteLine("news count" + news.Count);
-            news.ForEach(news =>
-            {
-                Console.WriteLine(news.title);
-                Console.WriteLine(news.subtitle);
-            });
             return await Task.FromResult(news);            
         }
     }

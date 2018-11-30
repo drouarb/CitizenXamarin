@@ -23,16 +23,13 @@ namespace citizen.ViewModels
 
         async Task ExecuteLoadThreadCommand()
         {
-            Console.Write("here we go");
             if (IsBusy)
                 return;
 
             IsBusy = true;
-            Console.Write("woooOOOOO");
             try
             {
                 Threads.Clear();
-                Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
                 var threads = await AgoraService.GetThreadsAsync(true);
                 foreach (var item in threads)
                 {
@@ -47,7 +44,6 @@ namespace citizen.ViewModels
             {
                 IsBusy = false;
             }
-            Console.Write("we lid it");
         }
     }
 }

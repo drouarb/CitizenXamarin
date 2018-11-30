@@ -84,11 +84,9 @@ namespace citizen.Views
             if (selected == -1)
             {
                 //TODO Nothing selected
-                Console.WriteLine("Nothing selected");
                 return;
             }
             
-            Console.WriteLine("Selected " + selected);
             if (!viewModel.IsBusy)
             {
                 SubmitButton.Text = "";

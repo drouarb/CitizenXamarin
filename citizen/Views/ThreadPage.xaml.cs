@@ -26,11 +26,8 @@ namespace citizen.Views
                 return;
 
             try {
-            Console.WriteLine("Navigate to thread " + thread.Uuid);
             var postview = new PostViewModel(thread);
-            Console.WriteLine("Ohhh sheeit " + postview == null);
             var threadetails = new ThreadDetailsPage(postview);
-            Console.WriteLine("nigguh");
             await Navigation.PushAsync(new ThreadDetailsPage(new PostViewModel(thread)));
 
             ThreadListView.SelectedItem = null;

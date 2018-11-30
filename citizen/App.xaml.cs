@@ -17,7 +17,7 @@ namespace citizen
 
             if (!ApiService.IsAuthenticated())
             {
-                MainPage = new LoginPage();
+                MainPage = new ReportPage();
             }
             else
             {

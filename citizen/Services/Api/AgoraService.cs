@@ -33,7 +33,6 @@ namespace citizen.Services.Api
         {
             if (forceRefresh == false && posts.Count != 0)
                 return posts;
-            Console.WriteLine("get post called bb");
             //TODO replace threads?pageNb=0&pageSize=100 by actual parameters
             string rawPosts = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/threads/thread/" + tr.Uuid + "/posts?pageNb=0&pageSize=100", HttpMethod.Get, null);
             Console.WriteLine("raw posts:" + rawPosts);
@@ -47,7 +46,6 @@ namespace citizen.Services.Api
             if (forceRefresh == false && threads.Count != 0)
                 return threads;
 
-            Console.WriteLine("get threads called bb");
             //TODO replace threads?pageNb=0&pageSize=100 by actual parameters
             string rawThreads = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/threads?pageNb=0&pageSize=100", HttpMethod.Get, null);
             Console.WriteLine("raw threads:" + rawThreads);

@@ -21,9 +21,7 @@ namespace citizen.ViewModels
             Console.Write("postviewmodel load\n");
             Thread = thread;
             AgoraService = new AgoraService(thread);
-            Console.Write("agora\n");
             Title = thread.Topic;
-            Console.Write("yepyepyepyep\n");
             Posts = new ObservableCollection<PostItem>();
             LoadPostCommand = new Command(async () => await ExecuteLoadPostCommand());
             SendPostCommand = new Command<String>(async (UserPost) => await ExecuteSubmitPostAsync(UserPost));
@@ -37,17 +35,14 @@ namespace citizen.ViewModels
 
         async Task ExecuteLoadPostCommand()
         {
-            Console.Write("execute\n");
             if (IsBusy)
                 return;
 
             IsBusy = true;
-            Console.Write("try\n");
             try
             {
                 Posts.Clear();
                 var items = await AgoraService.GetPostsAsync(true);
-                Console.Write("lets do dis\n");
                 foreach (var item in items)
                 {
                     Posts.Add(item);
@@ -61,7 +56,6 @@ namespace citizen.ViewModels
             {
                 IsBusy = false;
             }
-            Console.Write("we did it\n");
         }
     }
 }
