@@ -8,6 +8,7 @@ using citizen.Models.Api;
 using citizen.Models;
 using Newtonsoft.Json;
 using Xamarin.Forms.Internals;
+using System.IO;
 
 namespace citizen.Services
 {
@@ -82,6 +83,18 @@ namespace citizen.Services
                     return ApiRequest(url, verb, JSONBody).Result;
            //TODO Check Result
             return await resp.Content.ReadAsStringAsync();
+        }
+
+        public async Task<string> UploadFile(string MIME, Stream fileStream)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authenticationResponse.accessToken);
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            HttpContent content = new StreamContent(fileStream);
+            content.Headers.ContentType = new MediaTypeHeaderValue("MIME");
+            form.Add(content);
+            var response = await client.PostAsync("https://citizen.navispeed.eu/api/common/upload/file", form);
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }
