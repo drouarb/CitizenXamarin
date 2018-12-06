@@ -28,13 +28,17 @@
 	<string>eu.citizen.xamarin.Citizen</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+  <key>NSCalendarsUsageDescription</key>
+  <string>Needs Calendar Permission</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>citizen</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>NSCameraUsageDescription</key>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>This app needs access to location when open.</string>
+  <key>NSCameraUsageDescription</key>
 	<string>This app needs access to the camera to take photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to photos.</string>

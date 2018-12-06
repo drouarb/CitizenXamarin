@@ -13,5 +13,9 @@ namespace citizen.Models.Api
         public string title;
         [JsonProperty("string")]
         public string description;
+        [JsonProperty("double")]
+        public double lat;
+        [JsonProperty("double")]
+        public double lon;
     }
 }

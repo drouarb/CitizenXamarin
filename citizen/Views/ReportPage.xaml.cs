@@ -2,8 +2,12 @@
 using citizen.Services;
 using citizen.Services.Api;
 using citizen.ViewModels;
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -21,6 +25,7 @@ namespace citizen.Views
         public ReportPage()
         {
             InitializeComponent();
+            CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
             takePhoto.Clicked += async (sender, args) =>
             {
 
@@ -59,10 +64,22 @@ namespace citizen.Views
                 content.title = Title.Text;
                 content.description = Description.Text;
                 content.img_uuid = null;
+                content.lat = 0;
+                content.lon = 0;
                 if (file != null) {
                     await Task.Factory.StartNew(async () => { 
-                     content.img_uuid = await App.ApiService.UploadFile("image/jpeg", file.GetStream());
+                    content.img_uuid = await App.ApiService.UploadFile("image/jpeg", file.GetStream());
                     Console.WriteLine("Reports inc +++ " + content.img_uuid);
+                        Console.WriteLine("geoloc available ?" + CrossGeolocator.Current.IsGeolocationAvailable);
+                    if (CrossGeolocator.Current.IsGeolocationAvailable)
+                    {
+                            DisplayAlert("No GPS", ":( no gps.", "OK");
+                            Position pos =  await CrossGeolocator.Current.GetPositionAsync();
+                        content.lat = pos.Latitude;
+                        content.lon = pos.Longitude;
+                    }
+                     else   { DisplayAlert("GPS available", ":( yessss.", "OK"); }
+                    Console.WriteLine("geoloc; " + content.lat + content.lon);
                     ReportViewModel.sendReportCommand.Execute(content);
                     });
                 }
