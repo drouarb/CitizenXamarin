@@ -70,13 +70,13 @@ namespace citizen.Services
             
             /* testing refresh token
              * to be removed in final release
-             */
+             *
             Console.WriteLine("access token: " + _authenticationResponse.accessToken);
             Console.WriteLine("does refresh token work ? " + await RefreshToken());
             Console.WriteLine("access token: " + _authenticationResponse.accessToken);
-
-            //req.Content = new StringContent("test");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authenticationResponse.accessToken);
+            */
+           //req.Content = new StringContent("test");
+           _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authenticationResponse.accessToken);
             HttpResponseMessage resp = await _httpClient.SendAsync(req);
             if (resp.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 if (await RefreshToken())
@@ -87,14 +87,25 @@ namespace citizen.Services
 
         public async Task<string> UploadFile(string MIME, Stream fileStream)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authenticationResponse.accessToken);
+            try { 
+            Console.WriteLine("test");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authenticationResponse.accessToken);
+            Console.WriteLine("test1");
             MultipartFormDataContent form = new MultipartFormDataContent();
+            Console.WriteLine("test2");
             HttpContent content = new StreamContent(fileStream);
-            content.Headers.ContentType = new MediaTypeHeaderValue("MIME");
+            Console.WriteLine("test3");
+            content.Headers.ContentType = new MediaTypeHeaderValue(MIME);
+            Console.WriteLine("test4");
             form.Add(content);
-            var response = await client.PostAsync("https://citizen.navispeed.eu/api/common/upload/file", form);
+            Console.WriteLine("test5");
+            var response = await _httpClient.PostAsync("https://citizen.navispeed.eu/api/common/upload/file", form);
+            Console.WriteLine("Upload File result: " + response.StatusCode + " " + response.Content.ReadAsStringAsync());
             return await response.Content.ReadAsStringAsync();
+            } catch (Exception e) {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
         }
     }
 }

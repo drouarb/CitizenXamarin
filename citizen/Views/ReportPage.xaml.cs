@@ -1,9 +1,10 @@
-﻿using Plugin.Media;
+﻿using citizen.Models.Api;
+using citizen.Services;
+using citizen.Services.Api;
+using citizen.ViewModels;
+using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,10 +14,13 @@ namespace citizen.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReportPage : ContentPage
     {
+        MediaFile file;
+        ReportService ReportService = new ReportService();
+        ReportViewModel ReportViewModel = new ReportViewModel();
+
         public ReportPage()
         {
             InitializeComponent();
-
             takePhoto.Clicked += async (sender, args) =>
             {
 
@@ -26,7 +30,7 @@ namespace citizen.Views
                     return;
                 }
 
-                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
                     Directory = "Test",
                     SaveToAlbum = true,
@@ -45,9 +49,23 @@ namespace citizen.Views
                 image.Source = ImageSource.FromStream(() =>
                 {
                     var stream = file.GetStream();
-                    file.Dispose();
                     return stream;
                 });
+            };
+
+            send.Clicked += async (sender, args) =>
+            {
+                ReportContentItem content = new ReportContentItem();
+                content.title = Title.Text;
+                content.description = Description.Text;
+                content.img_uuid = null;
+                if (file != null) {
+                    await Task.Factory.StartNew(async () =>
+                     content.img_uuid = await App.ApiService.UploadFile("image/jpeg", file.GetStream())
+                    );
+                }
+                Console.WriteLine("Reports inc +++ " + content.img_uuid);
+                ReportViewModel.sendReportCommand.Execute(content);
             };
 
             pickPhoto.Clicked += async (sender, args) =>
@@ -57,7 +75,7 @@ namespace citizen.Views
                     DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
                     return;
                 }
-                var file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+                file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
                 {
                     PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
 
@@ -70,56 +88,56 @@ namespace citizen.Views
                 image.Source = ImageSource.FromStream(() =>
                 {
                     var stream = file.GetStream();
-                    file.Dispose();
                     return stream;
+
                 });
             };
 
-            takeVideo.Clicked += async (sender, args) =>
-            {
-                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakeVideoSupported)
-                {
-                    DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
-                    return;
-                }
+            /*           takeVideo.Clicked += async (sender, args) =>
+                       {
+                           if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakeVideoSupported)
+                           {
+                               DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
+                               return;
+                           }
 
-                var file = await CrossMedia.Current.TakeVideoAsync(new Plugin.Media.Abstractions.StoreVideoOptions
-                {
-                    Name = "video.mp4",
-                    Directory = "DefaultVideos",
-                });
+                           var file = await CrossMedia.Current.TakeVideoAsync(new Plugin.Media.Abstractions.StoreVideoOptions
+                           {
+                               Name = "video.mp4",
+                               Directory = "DefaultVideos",
+                           });
 
-                if (file == null)
-                    return;
+                           if (file == null)
+                               return;
 
-                DisplayAlert("Video Recorded", "Location: " + file.Path, "OK");
+                           DisplayAlert("Video Recorded", "Location: " + file.Path, "OK");
 
-                file.Dispose();
-            };
+                           file.Dispose();
+                       };
 
-            pickVideo.Clicked += async (sender, args) =>
-            {
-                if (!CrossMedia.Current.IsPickVideoSupported)
-                {
-                    DisplayAlert("Videos Not Supported", ":( Permission not granted to videos.", "OK");
-                    return;
-                }
-                var file = await CrossMedia.Current.PickVideoAsync();
+                       pickVideo.Clicked += async (sender, args) =>
+                       {
+                           if (!CrossMedia.Current.IsPickVideoSupported)
+                           {
+                               DisplayAlert("Videos Not Supported", ":( Permission not granted to videos.", "OK");
+                               return;
+                           }
+                           var file = await CrossMedia.Current.PickVideoAsync();
 
-                if (file == null)
-                    return;
+                           if (file == null)
+                               return;
 
-                DisplayAlert("Video Selected", "Location: " + file.Path, "OK");
-                file.Dispose();
-            };
+                           DisplayAlert("Video Selected", "Location: " + file.Path, "OK");
+                           file.Dispose();
+                       };*/
         }
 
         public ReportPage(Button takePhoto, Button pickPhoto, Button takeVideo, Button pickVideo, Image image)
         {
             this.takePhoto = takePhoto;
             this.pickPhoto = pickPhoto;
-            this.takeVideo = takeVideo;
-            this.pickVideo = pickVideo;
+            /*this.takeVideo = takeVideo;
+            this.pickVideo = pickVideo;*/
             this.image = image;
         }
     }

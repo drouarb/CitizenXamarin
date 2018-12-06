@@ -31,5 +31,15 @@
                 <views:NewsPage />
             </x:Arguments>
         </NavigationPage>
+        <NavigationPage Title="Reports">
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="consultation.png" />
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:ReportPage />
+            </x:Arguments>
+        </NavigationPage>
     </TabbedPage.Children>
 </TabbedPage>
