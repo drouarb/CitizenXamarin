@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace citizen.Models.Api
 {
-    class NotificationItem
+    public class NotificationItem
     {
         [JsonProperty("uuid")]
         public Guid Uuid { get; set; }

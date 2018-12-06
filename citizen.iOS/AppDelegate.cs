@@ -5,6 +5,7 @@ using Flex;
 using Foundation;
 using Plugin.LocalNotification.Platform.iOS;
 using UIKit;
+using UserNotifications;
 
 namespace citizen.iOS
 {
@@ -25,8 +26,14 @@ namespace citizen.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             FlexButton.Init();
-            LocalNotificationService.Init();
             
+            LocalNotificationService.Init();
+            if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
+            {
+                UNUserNotificationCenter.Current.Delegate = new UserNotificationCenterDelegate();
+            }
+            
+            UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
@@ -40,6 +47,13 @@ namespace citizen.iOS
             {
                 LocalNotificationService.NotifyNotificationTapped(notification);
             }
+        }
+        
+        public override void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            App.NotificationService.FetchNotifications().Wait();
+            
+            completionHandler (UIBackgroundFetchResult.NewData);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using citizen.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,6 +12,12 @@ namespace citizen.Views
         public MainPage()
         {
             InitializeComponent();
+
+            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+            {
+                Task.Factory.StartNew(async () => App.NotificationService.FetchNotifications());
+                return true;
+            });
         }
     }
 }

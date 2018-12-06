@@ -11,6 +11,7 @@ namespace citizen
     public partial class App : Application
     {
         public static ApiService ApiService = new ApiService();
+        public static NotificationService NotificationService = new NotificationService();
 
         public App()
         {
@@ -46,7 +47,7 @@ namespace citizen
         
         private void OnLocalNotificationTapped(LocalNotificationTappedEvent e)
         {
-            
+            Console.WriteLine("Notification clicked");
         }
     }
 }
