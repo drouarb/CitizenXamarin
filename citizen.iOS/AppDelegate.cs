@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Flex;
 using Foundation;
+using Plugin.LocalNotification.Platform.iOS;
 using UIKit;
 
 namespace citizen.iOS
@@ -24,9 +25,21 @@ namespace citizen.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             FlexButton.Init();
+            LocalNotificationService.Init();
+            
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+        
+        // This method only requires for iOS 8 , 9
+        public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
+        {
+            //Change UIApplicationState to suit different situations
+            if (UIApplication.SharedApplication.ApplicationState != UIApplicationState.Active)
+            {
+                LocalNotificationService.NotifyNotificationTapped(notification);
+            }
         }
     }
 }

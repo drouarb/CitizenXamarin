@@ -3,6 +3,7 @@ using citizen.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using citizen.Views;
+using Plugin.LocalNotification;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace citizen
@@ -14,6 +15,9 @@ namespace citizen
         public App()
         {
             InitializeComponent();
+            
+            MessagingCenter.Instance.Subscribe<LocalNotificationTappedEvent>(this,
+                typeof(LocalNotificationTappedEvent).FullName, OnLocalNotificationTapped);
 
             if (!ApiService.IsAuthenticated())
             {
@@ -38,6 +42,11 @@ namespace citizen
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+        
+        private void OnLocalNotificationTapped(LocalNotificationTappedEvent e)
+        {
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using citizen.ViewModels;
+using Plugin.LocalNotification;
 using Xamarin.Forms;
 
 namespace citizen.Views
@@ -12,6 +13,17 @@ namespace citizen.Views
             InitializeComponent();
 
             BindingContext = _loginViewModel = new LoginViewModel();
+            
+            var notificationService = DependencyService.Get<ILocalNotificationService>();
+            var notification = new Plugin.LocalNotification.LocalNotification
+            {
+                NotificationId = 100,
+                Title = "Test",
+                Description = "Test Description",
+                ReturningData = "Dummy data", // Returning data when tapped on notification.
+                NotifyTime = DateTime.Now.AddSeconds(5) // Used for Scheduling local notification.
+            };
+            notificationService.Show(notification);
         }
 
         async void OnLoginButtonClicked(object sender, EventArgs e)

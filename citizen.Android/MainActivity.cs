@@ -1,12 +1,14 @@
 ﻿using System;
 
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Plugin.CurrentActivity;
+using Plugin.LocalNotification.Platform.Droid;
 
 namespace citizen.Droid
 {
@@ -27,6 +29,12 @@ namespace citizen.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
             Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        
+        protected override void OnNewIntent(Intent intent)
+        {
+            LocalNotificationService.NotifyNotificationTapped(intent);
+            base.OnNewIntent(intent);
         }
     }
 }
