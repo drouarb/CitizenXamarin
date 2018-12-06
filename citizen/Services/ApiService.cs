@@ -100,7 +100,7 @@ namespace citizen.Services
             form.Add(content);
             Console.WriteLine("test5");
             var response = await _httpClient.PostAsync("https://citizen.navispeed.eu/api/common/upload/file", form);
-            Console.WriteLine("Upload File result: " + response.StatusCode + " " + response.Content.ReadAsStringAsync());
+            //Console.WriteLine("Upload File result: " + response.StatusCode + " " + response.Content.ReadAsStringAsync());
             return await response.Content.ReadAsStringAsync();
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());

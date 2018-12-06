@@ -60,12 +60,13 @@ namespace citizen.Views
                 content.description = Description.Text;
                 content.img_uuid = null;
                 if (file != null) {
-                    await Task.Factory.StartNew(async () =>
-                     content.img_uuid = await App.ApiService.UploadFile("image/jpeg", file.GetStream())
-                    );
+                    await Task.Factory.StartNew(async () => { 
+                     content.img_uuid = await App.ApiService.UploadFile("image/jpeg", file.GetStream());
+                    Console.WriteLine("Reports inc +++ " + content.img_uuid);
+                    ReportViewModel.sendReportCommand.Execute(content);
+                    });
                 }
-                Console.WriteLine("Reports inc +++ " + content.img_uuid);
-                ReportViewModel.sendReportCommand.Execute(content);
+
             };
 
             pickPhoto.Clicked += async (sender, args) =>
