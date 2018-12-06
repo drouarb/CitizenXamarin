@@ -15,5 +15,7 @@ namespace citizen.Models.Api
         public DateTime Created { get; set; }
         [JsonProperty("updated")]
         public DateTime Updated { get; set; }
+
+        public bool Selected;
     }
 }

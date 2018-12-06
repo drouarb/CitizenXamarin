@@ -15,6 +15,7 @@ namespace citizen.Views
     {
         PollDetailsViewModel viewModel;
         private int _choiceCount = 0;
+        private bool AlreadyVoted;
 
         public PollDetailsPage(PollDetailsViewModel viewModel)
         {
@@ -53,6 +54,9 @@ namespace citizen.Views
                     button.BorderThickness = 3;
 
                     button.ToggleMode = true;
+                    button.IsToggled = choice.Selected;
+                    if (choice.Selected)
+                        AlreadyVoted = true;
 
                     button.TouchedDown += HandleChoiceSelected;
                     
@@ -102,6 +106,12 @@ namespace citizen.Views
             var triggeredButton = sender as Flex.Controls.FlexButton;
             if (triggeredButton == null)
                 return;
+            
+            if (AlreadyVoted)
+            {
+                triggeredButton.IsToggled = !triggeredButton.IsToggled;
+                return;
+            }
             
             foreach (var item in PollChoicesGrid.Children)
             {

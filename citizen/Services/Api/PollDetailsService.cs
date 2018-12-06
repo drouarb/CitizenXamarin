@@ -18,6 +18,16 @@ namespace citizen.Services.Api
             choices = new List<PollChoice>();
         }
 
+        public async Task<PollStatut> GetResultAsync()
+        {
+            string rawStatus = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll/poll/" + poll.Uuid + "/statut", HttpMethod.Get, null);
+
+            if (String.IsNullOrEmpty(rawStatus))
+                return null;
+
+            return JsonConvert.DeserializeObject<PollStatut>(rawStatus);
+        }
+
         public async Task<IEnumerable<PollChoice>> GetItemsAsync(bool forceRefresh = false)
         {
             if (forceRefresh == false && choices.Count != 0)
@@ -27,7 +37,15 @@ namespace citizen.Services.Api
             Console.WriteLine(rawChoices);
             choices = JsonConvert.DeserializeObject<List<PollChoice>>(rawChoices);
             Console.WriteLine(choices.Count);
-            choices.ForEach(choice => Console.WriteLine(choice.Uuid + " " + choice.Text));
+            PollStatut statut = await GetResultAsync();
+            if (statut != null)
+            {
+                choices.ForEach(choice =>
+                {
+                    if (choice.Uuid == statut.Result)
+                        choice.Selected = true;
+                });
+            }
             return choices;
         }
 
