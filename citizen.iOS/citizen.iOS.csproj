@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Forms.Controls.FlexButton" Version="0.8.0" />
+    <PackageReference Include="Plugin.PushNotification" Version="1.3.0" />
     <PackageReference Include="Xamarin.Forms" Version="3.3.0.912540" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
