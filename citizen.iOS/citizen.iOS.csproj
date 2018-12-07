@@ -169,6 +169,15 @@
     <BundleResource Include="Resources\consultation%404x.png" />
     <BundleResource Include="Resources\consultation.png" />
     <BundleResource Include="Resources\consultation%402x.png" />
+    <BundleResource Include="Resources\news.png" />
+    <BundleResource Include="Resources\news%402x.png" />
+    <BundleResource Include="Resources\news%404x.png" />
+    <BundleResource Include="Resources\report.png" />
+    <BundleResource Include="Resources\report%402x.png" />
+    <BundleResource Include="Resources\report%404x.png" />
+    <BundleResource Include="Resources\agora.png" />
+    <BundleResource Include="Resources\agora%402x.png" />
+    <BundleResource Include="Resources\agora%404x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

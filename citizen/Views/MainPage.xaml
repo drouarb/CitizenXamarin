@@ -14,7 +14,7 @@
         <NavigationPage Title="Agora">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="consultation.png" />
+                    <On Platform="iOS" Value="agora.png" />
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
@@ -24,7 +24,7 @@
         <NavigationPage Title="News">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="consultation.png" />
+                    <On Platform="iOS" Value="news.png" />
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
@@ -34,7 +34,7 @@
         <NavigationPage Title="Reports">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="consultation.png" />
+                    <On Platform="iOS" Value="report.png" />
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
