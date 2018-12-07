@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using citizen.Models.Api;
 using System;
+using Acr.UserDialogs;
 
 namespace citizen.Views
 {
@@ -16,6 +17,20 @@ namespace citizen.Views
             InitializeComponent();
             BindingContext = viewModel = new ThreadViewModel();
             ThreadListView.BeginRefresh();
+
+            create.Clicked += async (sender, args) =>
+            {
+                PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
+                {
+                    InputType = InputType.Name,
+                    OkText = "Create",
+                    Title = "Create Thread",
+                });
+                if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
+                {
+                    viewModel.CreateThreadCommand.Execute(pResult.Text);//pResult.Text;
+                }
+            };
         }
 
         async void OnThreadSelected(object sender, SelectedItemChangedEventArgs args)
