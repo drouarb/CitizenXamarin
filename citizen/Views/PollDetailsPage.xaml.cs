@@ -37,6 +37,13 @@ namespace citizen.Views
 
         public void HandleLoadChange(object sender, EventArgs e)
         {
+            if (viewModel.Poll == null)
+            {
+                PollName.Text = "Erreur, impossible de trouver cette consultation";
+                LoadingActivityIndicator.IsVisible = false;
+                LoadingActivityIndicator.IsRunning = false;
+                return;
+            }
             PollName.Text = viewModel.Poll.Proposition;
             PollDetails.Text = viewModel.Poll.Details;
         }

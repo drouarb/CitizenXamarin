@@ -28,10 +28,6 @@ namespace citizen.iOS
             FlexButton.Init();
             
             LocalNotificationService.Init();
-            if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
-            {
-                UNUserNotificationCenter.Current.Delegate = new UserNotificationCenterDelegate();
-            }
             
             UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
             LoadApplication(new App());

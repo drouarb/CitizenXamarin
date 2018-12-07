@@ -16,6 +16,7 @@
                 </Grid.ColumnDefinitions>
                 <ActivityIndicator IsRunning="True"
                                    IsVisible="True"
+                                   x:Name="LoadingActivityIndicator"
                                    Color="#2499CE" Grid.Column="1" />
             </Grid>
             <Grid RowSpacing="10" x:Name="SubmitGrid" IsVisible="False">

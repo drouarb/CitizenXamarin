@@ -52,6 +52,12 @@ namespace citizen.ViewModels
         public async Task ExecuteLoadCommand()
         {
             Poll = await pollDetailsService.GetPoll();
+            if (Poll == null)
+            {
+                Title = "Erreur";
+                LoadCommand.ChangeCanExecute();
+                return;
+            }
             Title = Poll.Proposition;
             LoadCommand.ChangeCanExecute();
             await ExecuteLoadChoicesCommand();
