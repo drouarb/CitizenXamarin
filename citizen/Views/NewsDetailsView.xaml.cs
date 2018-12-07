@@ -17,16 +17,18 @@ namespace citizen.Views
 
 		public NewsDetailsView (NewsDetailsViewModel viewModel)
 		{
-			InitializeComponent ();
-
+			InitializeComponent();
             BindingContext = this.viewModel = viewModel;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            viewModel.LoadNewsDetailsCommand.Execute(null);
+            var browser = new WebView();
+            var htmlSource = new HtmlWebViewSource();
+            htmlSource.Html = "<h2>" + viewModel.news.title + "</h2>" + "<h3>" + viewModel.news.subtitle + "</h3>" + viewModel.news.content;
+            browser.Source = htmlSource;
+            Content = browser;
         }
     }
 }

@@ -17,13 +17,13 @@ namespace citizen.Services.Api
             this.news = item;
         }
 
-        public async Task<NewsItem> GetItemAsync(bool forceRefresh = false)
+        public async Task<NewsItem> GetItemAsync(string uuid, bool forceRefresh = false)
         {
             if (forceRefresh == false)
                 return news;
 
             Console.WriteLine("CALLLLLLLLLLLLLLLLLLLLL NEWS DETAILS");
-            string rawNewsDetails = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/news/" + news.Uuid, HttpMethod.Get);
+            string rawNewsDetails = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/news/" + uuid, HttpMethod.Get);
             Console.WriteLine(rawNewsDetails);
             news = JsonConvert.DeserializeObject<NewsItem>(rawNewsDetails);
             Console.WriteLine("CONTENT: " + news.content);
