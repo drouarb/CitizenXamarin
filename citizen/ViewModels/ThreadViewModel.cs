@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using citizen.Models.Api;
 using citizen.Services.Api;
+using citizen.Views;
 using Xamarin.Forms;
 
 namespace citizen.ViewModels
@@ -14,6 +15,12 @@ namespace citizen.ViewModels
         public Command CreateThreadCommand { get; set; }
         public ObservableCollection<ThreadItem> Threads { get; set; }
         public AgoraService AgoraService = new AgoraService();
+        ThreadItem lastThread;
+
+        public ThreadItem getLastThread()
+        {
+            return lastThread;
+        }
 
         public ThreadViewModel ()
 		{
@@ -28,9 +35,14 @@ namespace citizen.ViewModels
             if (IsBusy)
                 return;
             IsBusy = true;
-            try { await AgoraService.CreateThreadAsync(threadName); }
-            finally { IsBusy = false; }
+            try
+            {
+                var uuid = await AgoraService.CreateThreadAsync(threadName);
+                lastThread = await AgoraService.GetThreadAsync(uuid);
             }
+            finally { IsBusy = false; }
+            CreateThreadCommand.ChangeCanExecute();
+        }
 
         async Task ExecuteLoadThreadCommand()
         {

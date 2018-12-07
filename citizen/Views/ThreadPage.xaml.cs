@@ -17,6 +17,7 @@ namespace citizen.Views
             InitializeComponent();
             BindingContext = viewModel = new ThreadViewModel();
             ThreadListView.BeginRefresh();
+            viewModel.CreateThreadCommand.CanExecuteChanged += FetchThreadHandler;
 
             create.Clicked += async (sender, args) =>
             {
@@ -28,9 +29,19 @@ namespace citizen.Views
                 });
                 if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
                 {
-                    viewModel.CreateThreadCommand.Execute(pResult.Text);//pResult.Text;
+                    viewModel.CreateThreadCommand.Execute(pResult.Text);
                 }
             };
+        }
+
+        void FetchThreadHandler(object sender, EventArgs e)
+        {
+            Console.WriteLine("getlastthread");
+            var thread = viewModel.getLastThread();
+            Console.WriteLine("postviewmodel" + thread);
+            var postview = new PostViewModel(thread);
+            Console.WriteLine("ThreadDetailsPage");
+            Navigation.PushAsync(new ThreadDetailsPage(new PostViewModel(thread)));
         }
 
         async void OnThreadSelected(object sender, SelectedItemChangedEventArgs args)
@@ -42,7 +53,6 @@ namespace citizen.Views
 
             try {
             var postview = new PostViewModel(thread);
-            var threadetails = new ThreadDetailsPage(postview);
             await Navigation.PushAsync(new ThreadDetailsPage(new PostViewModel(thread)));
 
             ThreadListView.SelectedItem = null;

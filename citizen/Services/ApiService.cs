@@ -72,7 +72,6 @@ namespace citizen.Services
             HttpRequestMessage req = new HttpRequestMessage(verb, url);
             if (JSONBody != null)
                 req.Content = new StringContent(JSONBody, Encoding.UTF8, "application/json");
-            Console.WriteLine(req.Content.ToString());
             
             /* testing refresh token
              * to be removed in final release

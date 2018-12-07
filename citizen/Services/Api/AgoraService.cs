@@ -30,6 +30,13 @@ namespace citizen.Services.Api
             return rawValue;
         }
 
+        public async Task<ThreadItem> GetThreadAsync(String uuid)
+        {
+            string rawValue = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/threads/thread/" + uuid, HttpMethod.Get, null);
+            Console.WriteLine("raw thread creqte:" + rawValue);
+            return JsonConvert.DeserializeObject<ThreadItem>(rawValue);
+        }
+
         public async Task<String> PostPostAsync(String post)
         {
             string rawValue = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/threads/posts?tid=" + tr.Uuid + "&author=user&message=" + post, HttpMethod.Post, null);
