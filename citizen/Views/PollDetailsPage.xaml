@@ -5,8 +5,8 @@
              x:Class="citizen.Views.PollDetailsPage" Title="{Binding Title}">
     <ScrollView x:Name="PollScrollView">
         <StackLayout Spacing="20" Padding="15" x:Name="PollStackLayout">
-            <Label Text="{Binding Poll.Proposition}" FontAttributes="Bold" FontSize="25" />
-            <Label Text="{Binding Poll.Details}" />
+            <Label x:Name="PollName" Text="{Binding Poll.Proposition}" FontAttributes="Bold" FontSize="25" />
+            <Label x:Name="PollDetails" Text="{Binding Poll.Details}" />
 
             <Grid x:Name="PollChoicesGrid" RowSpacing="20">
                 <Grid.ColumnDefinitions>

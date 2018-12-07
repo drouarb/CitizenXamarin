@@ -13,7 +13,7 @@ namespace citizen.ViewModels
     {
         public PollItem Poll { get; set; }
         public ObservableCollection<PollChoice> PollChoices { get; set; }
-        public Command LoadChoicesCommand { get; set; }
+        public Command LoadCommand { get; set; }
         public Command<int> VoteCommand { get; set; }
 
         private PollDetailsService pollDetailsService;
@@ -23,10 +23,21 @@ namespace citizen.ViewModels
             Poll = poll;
             Title = poll.Proposition;
             PollChoices = new ObservableCollection<PollChoice>();
-            LoadChoicesCommand = new Command(async () => await ExecuteLoadChoicesCommand());
-     
+            LoadCommand = new Command(async () => await ExecuteLoadChoicesCommand());
             VoteCommand = new Command<int>(async s => await ExecuteVote(s));
             pollDetailsService = new PollDetailsService(poll);
+        }
+
+        public PollDetailsViewModel(String uuid)
+        {
+            Console.WriteLine("New PollDetailsView from uuid " + uuid);
+            Title = "Chargement...";
+            Poll = new PollItem();
+            Poll.Uuid = new Guid(uuid);
+            PollChoices = new ObservableCollection<PollChoice>();
+            LoadCommand = new Command(async () => await ExecuteLoadCommand());
+            VoteCommand = new Command<int>(async s => await ExecuteVote(s));
+            pollDetailsService = new PollDetailsService(Poll.Uuid);
         }
 
         public async Task ExecuteVote(int selectedId)
@@ -36,6 +47,14 @@ namespace citizen.ViewModels
             await pollDetailsService.Vote(choice);
             //VoteBusy = false;
             VoteCommand.ChangeCanExecute();
+        }
+
+        public async Task ExecuteLoadCommand()
+        {
+            Poll = await pollDetailsService.GetPoll();
+            Title = Poll.Proposition;
+            LoadCommand.ChangeCanExecute();
+            await ExecuteLoadChoicesCommand();
         }
 
         public async Task ExecuteLoadChoicesCommand()

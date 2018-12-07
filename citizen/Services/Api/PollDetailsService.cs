@@ -11,16 +11,37 @@ namespace citizen.Services.Api
     {
         private PollItem poll;
         private List<PollChoice> choices;
-        
+
         public PollDetailsService(PollItem poll)
         {
             this.poll = poll;
             choices = new List<PollChoice>();
         }
 
+        public PollDetailsService(Guid uuid)
+        {
+            poll = new PollItem();
+            poll.Uuid = uuid;
+            choices = new List<PollChoice>();
+        }
+
+        public async Task<PollItem> GetPoll()
+        {
+            string rawPoll = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll/poll/" + poll.Uuid,
+                HttpMethod.Get);
+            Console.WriteLine(rawPoll);
+
+            if (String.IsNullOrEmpty(rawPoll))
+                return null;
+            poll = JsonConvert.DeserializeObject<PollItem>(rawPoll);
+            Console.WriteLine("Le poll c'est " + poll.Proposition);
+            return poll;
+        }
+
         public async Task<PollStatut> GetResultAsync()
         {
-            string rawStatus = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll/poll/" + poll.Uuid + "/statut", HttpMethod.Get, null);
+            string rawStatus = await App.ApiService.ApiRequest(
+                "https://citizen.navispeed.eu/api/poll/poll/" + poll.Uuid + "/statut", HttpMethod.Get, null);
 
             if (String.IsNullOrEmpty(rawStatus))
                 return null;
@@ -33,7 +54,8 @@ namespace citizen.Services.Api
             if (forceRefresh == false && choices.Count != 0)
                 return choices;
 
-            string rawChoices = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/poll/poll/" + poll.Uuid + "/choices", HttpMethod.Get, null);
+            string rawChoices = await App.ApiService.ApiRequest(
+                "https://citizen.navispeed.eu/api/poll/poll/" + poll.Uuid + "/choices", HttpMethod.Get, null);
             Console.WriteLine(rawChoices);
             choices = JsonConvert.DeserializeObject<List<PollChoice>>(rawChoices);
             Console.WriteLine(choices.Count);
@@ -46,6 +68,7 @@ namespace citizen.Services.Api
                         choice.Selected = true;
                 });
             }
+
             return choices;
         }
 

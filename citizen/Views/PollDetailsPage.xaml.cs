@@ -5,7 +5,6 @@ using citizen.Models.Api;
 using citizen.Services.Api;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
 using citizen.ViewModels;
 
 namespace citizen.Views
@@ -17,6 +16,16 @@ namespace citizen.Views
         private int _choiceCount = 0;
         private bool AlreadyVoted;
 
+        public PollDetailsPage(String uuid)
+        {
+            InitializeComponent();
+
+            BindingContext = this.viewModel = new PollDetailsViewModel(uuid);
+            viewModel.PollChoices.CollectionChanged += HandleChoiceChange;
+            viewModel.VoteCommand.CanExecuteChanged += HandleVoteExecuted;
+            viewModel.LoadCommand.CanExecuteChanged += HandleLoadChange;
+        }
+
         public PollDetailsPage(PollDetailsViewModel viewModel)
         {
             InitializeComponent();
@@ -24,6 +33,12 @@ namespace citizen.Views
             BindingContext = this.viewModel = viewModel;
             viewModel.PollChoices.CollectionChanged += HandleChoiceChange;
             viewModel.VoteCommand.CanExecuteChanged += HandleVoteExecuted;
+        }
+
+        public void HandleLoadChange(object sender, EventArgs e)
+        {
+            PollName.Text = viewModel.Poll.Proposition;
+            PollDetails.Text = viewModel.Poll.Details;
         }
 
         private void HandleChoiceChange(object sender, NotifyCollectionChangedEventArgs e)
@@ -34,7 +49,7 @@ namespace citizen.Views
                 {
                     var choice = choiceObj as PollChoice;
                     Console.WriteLine(choice.Text);
-                    var PrimaryColor = (Color)App.Current.Resources["NavigationPrimary"];
+                    var PrimaryColor = (Color) App.Current.Resources["NavigationPrimary"];
                     var button = new Flex.Controls.FlexButton();
                     button.HorizontalOptions = LayoutOptions.Fill;
                     button.Text = choice.Text;
@@ -43,7 +58,7 @@ namespace citizen.Views
                     //Default color
                     button.ForegroundColor = PrimaryColor;
                     button.BackgroundColor = Color.White;
-            
+
                     //Pressed color
                     button.HighlightBackgroundColor = PrimaryColor;
                     button.HighlightForegroundColor = Color.White;
@@ -59,7 +74,7 @@ namespace citizen.Views
                         AlreadyVoted = true;
 
                     button.TouchedDown += HandleChoiceSelected;
-                    
+
                     PollChoicesGrid.Children.Add(button, 1, _choiceCount++);
                 }
             }
@@ -69,7 +84,7 @@ namespace citizen.Views
         {
             int i = 0;
             int selected = -1;
-            
+
             foreach (var item in PollChoicesGrid.Children)
             {
                 var button = item as Flex.Controls.FlexButton;
@@ -86,7 +101,7 @@ namespace citizen.Views
                 //TODO Nothing selected
                 return;
             }
-            
+
             if (!viewModel.IsBusy)
             {
                 SubmitButton.Text = "";
@@ -104,13 +119,13 @@ namespace citizen.Views
             var triggeredButton = sender as Flex.Controls.FlexButton;
             if (triggeredButton == null)
                 return;
-            
+
             if (AlreadyVoted)
             {
                 triggeredButton.IsToggled = !triggeredButton.IsToggled;
                 return;
             }
-            
+
             foreach (var item in PollChoicesGrid.Children)
             {
                 var button = item as Flex.Controls.FlexButton;
@@ -129,7 +144,7 @@ namespace citizen.Views
 
         public void HandleSubmitAppear(object sender, EventArgs e)
         {
-            PollScrollView.ScrollToAsync(0, PollStackLayout.Height - PollScrollView.Height, true);                
+            PollScrollView.ScrollToAsync(0, PollStackLayout.Height - PollScrollView.Height, true);
         }
 
         protected override void OnAppearing()
@@ -137,7 +152,7 @@ namespace citizen.Views
             base.OnAppearing();
 
             if (viewModel.PollChoices.Count == 0)
-                viewModel.LoadChoicesCommand.Execute(null);
+                viewModel.LoadCommand.Execute(null);
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using System;
 using citizen.Services;
+using citizen.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using citizen.Views;
 using Plugin.LocalNotification;
+using Xamarin.Forms.Internals;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace citizen
 {
     public partial class App : Application
@@ -16,9 +19,9 @@ namespace citizen
         public App()
         {
             InitializeComponent();
-            
+
             MessagingCenter.Instance.Subscribe<LocalNotificationTappedEvent>(this,
-                typeof(LocalNotificationTappedEvent).FullName, OnLocalNotificationTapped);
+                typeof(LocalNotificationTappedEvent).FullName, NotificationRouter);
 
             if (!ApiService.IsAuthenticated())
             {
@@ -44,10 +47,24 @@ namespace citizen
         {
             // Handle when your app resumes
         }
-        
-        private void OnLocalNotificationTapped(LocalNotificationTappedEvent e)
+
+        private void NotificationRouter(LocalNotificationTappedEvent e)
         {
-            Console.WriteLine("Notification clicked");
+            var route = e.Data.Split('/');
+            switch (route[1])
+            {
+                case "consultation":
+                    try
+                    {
+                        Console.WriteLine("Notification Poll " + route[2]);
+                        ((MainPage) MainPage).CurrentPage.Navigation.PushAsync(new PollDetailsPage(route[2]));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    return;
+            }
         }
     }
 }
