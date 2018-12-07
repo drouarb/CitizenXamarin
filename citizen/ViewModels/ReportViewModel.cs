@@ -10,7 +10,7 @@ using System;
 
 namespace citizen.ViewModels
 {
-    class ReportViewModel
+    class ReportViewModel: BaseViewModel
     {
         public Command sendReportCommand { get; set; }
         public ReportService ReportService = new ReportService();
@@ -18,6 +18,7 @@ namespace citizen.ViewModels
 
         public ReportViewModel()
         {
+            Title = "Signalement";
             sendReportCommand = new Command<ReportContentItem>(async (content) => await ExecuteSendReportCommand(content));
         }
 
