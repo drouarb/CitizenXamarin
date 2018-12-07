@@ -21,17 +21,17 @@ namespace citizen.Views
         MediaFile file;
         ReportService ReportService = new ReportService();
         ReportViewModel ReportViewModel = new ReportViewModel();
+        ReportContentItem content = new ReportContentItem();
 
         public ReportPage()
         {
             InitializeComponent();
-            CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
             takePhoto.Clicked += async (sender, args) =>
             {
 
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
-                    DisplayAlert("No Camera", ":( No camera available.", "OK");
+                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
                     return;
                 }
 
@@ -49,7 +49,7 @@ namespace citizen.Views
                 if (file == null)
                     return;
 
-                DisplayAlert("File Location", file.Path, "OK");
+                await DisplayAlert("File Location", file.Path, "OK");
 
                 image.Source = ImageSource.FromStream(() =>
                 {
@@ -60,7 +60,14 @@ namespace citizen.Views
 
             send.Clicked += async (sender, args) =>
             {
-                ReportContentItem content = new ReportContentItem();
+                await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+                var hasPermission = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+                if (hasPermission != PermissionStatus.Granted)
+                {
+                    await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                    return;
+                }
+                    
                 content.title = Title.Text;
                 content.description = Description.Text;
                 content.img_uuid = null;
@@ -73,12 +80,12 @@ namespace citizen.Views
                         Console.WriteLine("geoloc available ?" + CrossGeolocator.Current.IsGeolocationAvailable);
                     if (CrossGeolocator.Current.IsGeolocationAvailable)
                     {
-                            DisplayAlert("No GPS", ":( no gps.", "OK");
+                            Console.WriteLine(" GPS yesss");
                             Position pos =  await CrossGeolocator.Current.GetPositionAsync();
                         content.lat = pos.Latitude;
                         content.lon = pos.Longitude;
                     }
-                     else   { DisplayAlert("GPS available", ":( yessss.", "OK"); }
+                     else   { Console.WriteLine("GPS unavailable"); }
                     Console.WriteLine("geoloc; " + content.lat + content.lon);
                     ReportViewModel.sendReportCommand.Execute(content);
                     });
@@ -90,7 +97,7 @@ namespace citizen.Views
             {
                 if (!CrossMedia.Current.IsPickPhotoSupported)
                 {
-                    DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                    await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
                     return;
                 }
                 file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions

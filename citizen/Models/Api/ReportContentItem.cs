@@ -7,15 +7,15 @@ namespace citizen.Models.Api
 {
     class ReportContentItem
     {
-        [JsonProperty("uuid")]
+        [JsonProperty("img_uuid")]
         public string img_uuid;
-        [JsonProperty("string")]
+        [JsonProperty("title")]
         public string title;
-        [JsonProperty("string")]
+        [JsonProperty("description")]
         public string description;
-        [JsonProperty("double")]
+        [JsonProperty("lat")]
         public double lat;
-        [JsonProperty("double")]
+        [JsonProperty("lon")]
         public double lon;
     }
 }

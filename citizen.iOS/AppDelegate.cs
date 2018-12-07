@@ -28,8 +28,11 @@ namespace citizen.iOS
             FlexButton.Init();
             
             LocalNotificationService.Init();
-            
+ 
             UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
+
+            global::Xamarin.Forms.Forms.Init();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

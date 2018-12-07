@@ -10,6 +10,7 @@ using Android.OS;
 using Plugin.CurrentActivity;
 using Plugin.LocalNotification.Platform.Droid;
 using Plugin.Permissions;
+using Acr.UserDialogs;
 
 namespace citizen.Droid
 {
@@ -20,6 +21,8 @@ namespace citizen.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+            UserDialogs.Init(this);
+
 
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

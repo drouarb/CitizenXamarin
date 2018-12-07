@@ -14,7 +14,8 @@ namespace citizen.Services.Api
     {
         public async Task<String> ReportPostAsync(ReportContentItem content)
         {
-            string rawValue = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/reports", HttpMethod.Post, content.ToString());
+            
+            string rawValue = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/reports", HttpMethod.Post, JsonConvert.SerializeObject(content));
             Console.WriteLine("Report Post: " + rawValue);
             return rawValue;
         }

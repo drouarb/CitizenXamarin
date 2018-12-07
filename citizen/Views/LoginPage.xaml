@@ -19,7 +19,7 @@
                     <Label Text="Username" />
                     <Entry x:Name="UsernameEntry" Placeholder="username" />
                     <Label Text="Password" />
-                    <Entry x:Name="PasswordEntry" IsPassword="true" />
+                <Entry x:Name="PasswordEntry" IsPassword="true" Placeholder="password"/>
                     <Label x:Name="MessageLabel" Opacity="0" Text="Label" TextColor="{StaticResource ErrorPrimary}" HorizontalTextAlignment="Center" />
 
                     <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
