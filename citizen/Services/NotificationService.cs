@@ -39,7 +39,7 @@ namespace citizen.Services
                 if (!Application.Current.Properties.ContainsKey("notification-" + notification.Uuid))
                 {
                     Console.WriteLine(notification.Title);
-                    //Application.Current.Properties["notification-" + notification.Uuid] = notification;
+                    Application.Current.Properties["notification-" + notification.Uuid] = notification;
 
                     Device.BeginInvokeOnMainThread(() =>
                     {
