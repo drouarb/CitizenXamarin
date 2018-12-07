@@ -7,15 +7,14 @@ using System.Text;
 using citizen.Models.Api;
 using citizen.Models;
 using Newtonsoft.Json;
-using Xamarin.Forms.Internals;
 using System.IO;
+using Xamarin.Forms;
 
 namespace citizen.Services
 {
     public class ApiService
     {
         private HttpClient _httpClient;
-        private AuthenticationResponse _authenticationResponse = null;
         
         public ApiService()
         {
@@ -25,7 +24,7 @@ namespace citizen.Services
 
         public bool IsAuthenticated()
         {
-            return _authenticationResponse != null;
+            return Application.Current.Properties.ContainsKey("refreshToken");
         }
 
         public async Task<bool> Authenticate(string Username, string Password)
@@ -42,21 +41,27 @@ namespace citizen.Services
             if (!resp.IsSuccessStatusCode)
                 return false;
 
-            _authenticationResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await resp.Content.ReadAsStringAsync());
+            AuthenticationResponse authenticationResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await resp.Content.ReadAsStringAsync());
+            Application.Current.Properties["accessToken"] = authenticationResponse.accessToken;
+            Application.Current.Properties["refreshToken"] = authenticationResponse.refreshToken;
+            await Application.Current.SavePropertiesAsync();
             return true;
         }
 
         public async Task<bool> RefreshToken()
         {
             var values = new List<KeyValuePair<string, string>>();
-            values.Add(new KeyValuePair<string, string>("refresh_token", _authenticationResponse.refreshToken));
+            values.Add(new KeyValuePair<string, string>("refresh_token", Application.Current.Properties["refreshToken"].ToString()));
             values.Add(new KeyValuePair<string, string>("grant_type", "refresh_token"));
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "Y2l0aXplbjpzZWNyZXQ=");
             HttpResponseMessage resp = await _httpClient.PostAsync("https://oauth.citizen.navispeed.eu/oauth/token", new FormUrlEncodedContent(values));
             if (!resp.IsSuccessStatusCode)
                 return false;
 
-            _authenticationResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await resp.Content.ReadAsStringAsync());
+            AuthenticationResponse authenticationResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await resp.Content.ReadAsStringAsync());
+            Application.Current.Properties["accessToken"] = authenticationResponse.accessToken;
+            Application.Current.Properties["refreshToken"] = authenticationResponse.refreshToken;
+            await Application.Current.SavePropertiesAsync();
             return true;
         }
 
@@ -76,7 +81,7 @@ namespace citizen.Services
             Console.WriteLine("access token: " + _authenticationResponse.accessToken);
             */
            //req.Content = new StringContent("test");
-           _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authenticationResponse.accessToken);
+           _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Application.Current.Properties["accessToken"].ToString());
             HttpResponseMessage resp = await _httpClient.SendAsync(req);
             if (resp.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 if (await RefreshToken())
@@ -89,7 +94,7 @@ namespace citizen.Services
         {
             try { 
             Console.WriteLine("test");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _authenticationResponse.accessToken);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Application.Current.Properties["accessToken"].ToString());
             Console.WriteLine("test1");
             MultipartFormDataContent form = new MultipartFormDataContent();
             Console.WriteLine("test2");

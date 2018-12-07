@@ -20,7 +20,6 @@ namespace citizen.Services
             if (forceRefresh == false && notifications.Count != 0)
                 return notifications;
 
-            Console.WriteLine("Mais lol ?");
             string rawNotifications = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/notification/unread", HttpMethod.Get, null);
             Console.WriteLine("Notifs:" + rawNotifications);
             notifications = JsonConvert.DeserializeObject<List<NotificationItem>>(rawNotifications);
@@ -34,24 +33,27 @@ namespace citizen.Services
                 return;
 
             await GetNotificationsAsync(true);
-            foreach (var notification in notifications)
+            Device.BeginInvokeOnMainThread(() =>
             {
-                if (!Application.Current.Properties.ContainsKey("notification-" + notification.Uuid))
+                foreach (var notification in notifications)
                 {
-                    Console.WriteLine(notification.Title);
-                    Application.Current.Properties["notification-" + notification.Uuid] = notification;
-                    
-                    var notificationService = DependencyService.Get<ILocalNotificationService>();
-                    notificationService.Show(new LocalNotification
+                    if (!Application.Current.Properties.ContainsKey("notification-" + notification.Uuid))
                     {
-                        NotificationId = random.Next(0, 1000000000),
-                        Title = notification.Title,
-                        Description = notification.Content,
-                        ReturningData = notification.Url,
-                        NotifyTime = DateTime.Now.AddSeconds(1)
-                    });
+                        Console.WriteLine(notification.Title);
+                        //Application.Current.Properties["notification-" + notification.Uuid] = notification;
+
+                        var notificationService = DependencyService.Get<ILocalNotificationService>();
+                        notificationService.Show(new LocalNotification
+                        {
+                            NotificationId = random.Next(0, 1000000000),
+                            Title = notification.Title,
+                            Description = notification.Content,
+                            ReturningData = notification.Url,
+                            NotifyTime = DateTime.Now.AddSeconds(30)
+                        });
+                    }
                 }
-            }
+            });
         }
     }
 }

@@ -15,7 +15,8 @@ namespace citizen.Views
 
             Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {
-                Task.Factory.StartNew(async () => App.NotificationService.FetchNotifications());
+                Console.WriteLine("Notifs Fetch");
+                Task.Factory.StartNew(async () => await App.NotificationService.FetchNotifications());
                 return true;
             });
         }
