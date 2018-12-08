@@ -15,6 +15,7 @@
                                        Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
                             <Label Text="{Binding Created}" LineBreakMode="NoWrap"
                                        Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
+                            <WebView Source="{Binding Mode=OneTime}" InputTransparent="False" HorizontalOptions="CenterAndExpand"></WebView>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
