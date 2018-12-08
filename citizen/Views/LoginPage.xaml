@@ -16,10 +16,10 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
                 <StackLayout Grid.Column="1" Grid.Row="1">
-                    <Label Text="Username" />
-                    <Entry x:Name="UsernameEntry" Placeholder="username" />
-                    <Label Text="Password" />
-                <Entry x:Name="PasswordEntry" IsPassword="true" Placeholder="password"/>
+                    <Label Text="Identifiant:" />
+                    <Entry x:Name="UsernameEntry" Placeholder="Identifiant" />
+                    <Label Text="Mot de passe:" />
+                <Entry x:Name="PasswordEntry" IsPassword="true" Placeholder="Mot de passe"/>
                     <Label x:Name="MessageLabel" Opacity="0" Text="Label" TextColor="{StaticResource ErrorPrimary}" HorizontalTextAlignment="Center" />
 
                     <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">

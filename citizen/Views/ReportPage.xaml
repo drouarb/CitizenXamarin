@@ -7,7 +7,7 @@
     <StackLayout Spacing="10" Padding="10">
 
         <Label Text="Sujet:" />
-        <Entry x:Name="Titre" Placeholder="Title" />
+        <Entry x:Name="Title" Placeholder="Titre" />
         <Label Text="Description:" />
 
         <Grid VerticalOptions="FillAndExpand">
