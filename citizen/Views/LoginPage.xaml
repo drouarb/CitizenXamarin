@@ -17,7 +17,15 @@
             </Grid.RowDefinitions>
             <StackLayout Grid.Column="1" Grid.Row="1">
                 <Label Text="Identifiant:" />
-                <Entry x:Name="UsernameEntry" Placeholder="Identifiant" />
+                <Entry x:Name="UsernameEntry" Placeholder="Identifiant">
+                    <Entry.Keyboard>
+                        <Keyboard x:FactoryMethod="Create">
+                            <x:Arguments>
+                                <KeyboardFlags>None</KeyboardFlags>
+                            </x:Arguments>
+                        </Keyboard>
+                    </Entry.Keyboard>
+                </Entry>
                 <Label Text="Mot de passe:" />
                 <Entry x:Name="PasswordEntry" IsPassword="true" Placeholder="Mot de passe" Completed="OnLoginButtonClicked"/>
                 <Label x:Name="MessageLabel" Opacity="0" Text="Label" TextColor="{StaticResource ErrorPrimary}"
