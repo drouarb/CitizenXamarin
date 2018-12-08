@@ -36,14 +36,14 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <flex:FlexButton x:Name="takePhoto"
+                <flex:FlexButton Clicked="TakePhotoHandler"
                                  Grid.Column="0"
                                  VerticalOptions="FillAndExpand"
                                  HorizontalOptions="FillAndExpand"
                                  BackgroundColor="{StaticResource NavigationPrimary}"
                                  HighlightBackgroundColor="{StaticResource NavigationSecondary}"
                                  Text="Prendre une photo" />
-                <flex:FlexButton x:Name="pickPhoto"
+                <flex:FlexButton Clicked="PickPhotoHandler"
                                  Grid.Column="1"
                                  VerticalOptions="FillAndExpand"
                                  HorizontalOptions="FillAndExpand"
@@ -53,7 +53,7 @@
             </Grid>
             <flex:FlexButton
                 Grid.Row="1"
-                x:Name="send"
+                Clicked="SendReportHandler"
                 Text="Envoyer le Signalement"
                 BackgroundColor="{StaticResource NavigationPrimary}"
                 HighlightBackgroundColor="{StaticResource NavigationSecondary}"

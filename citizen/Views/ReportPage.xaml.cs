@@ -28,101 +28,100 @@ namespace citizen.Views
         public ReportPage()
         {
             InitializeComponent();
-            takePhoto.Clicked += async (sender, args) =>
+        }
+
+        public async void TakePhotoHandler(object sender, EventArgs e)
+        {
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
+                await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                return;
+            }
 
-                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-                {
-                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
-                    return;
-                }
-
-                file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                {
-                    Directory = "Test",
-                    SaveToAlbum = true,
-                    CompressionQuality = 75,
-                    CustomPhotoSize = 50,
-                    PhotoSize = PhotoSize.MaxWidthHeight,
-                    MaxWidthHeight = 2000,
-                    DefaultCamera = CameraDevice.Front
-                });
-
-                if (file == null)
-                    return;
-
-                await DisplayAlert("File Location", file.Path, "OK");
-
-                image.Source = ImageSource.FromStream(() =>
-                {
-                    var stream = file.GetStream();
-                    return stream;
-                });
-                imageLoaded = true;
-                ImageRow.Height = GridLength.Star;
-            };
-
-            send.Clicked += async (sender, args) =>
+            file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
             {
-                await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
-                var hasPermission = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
-                if (hasPermission != PermissionStatus.Granted)
-                {
-                    await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
-                    return;
-                }
+                Directory = "Test",
+                SaveToAlbum = true,
+                CompressionQuality = 75,
+                CustomPhotoSize = 50,
+                PhotoSize = PhotoSize.MaxWidthHeight,
+                MaxWidthHeight = 2000,
+                DefaultCamera = CameraDevice.Front
+            });
+
+            if (file == null)
+                return;
+
+            await DisplayAlert("File Location", file.Path, "OK");
+
+            image.Source = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                return stream;
+            });
+            imageLoaded = true;
+            ImageRow.Height = GridLength.Star;
+        }
+
+        public async void PickPhotoHandler(object sender, EventArgs e)
+        {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                return;
+            }
+            file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+            {
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
+
+            });
+
+
+            if (file == null)
+                return;
+
+            image.Source = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                return stream;
+
+            });
+            imageLoaded = true;
+            ImageRow.Height = GridLength.Star;
+        }
+
+        public async void SendReportHandler(object sender, EventArgs e)
+        {
+            await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+            var hasPermission = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+            if (hasPermission != PermissionStatus.Granted)
+            {
+                await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                return;
+            }
                     
-                content.title = Title.Text;
-                content.description = Description.Text;
-                content.img_uuid = null;
-                content.lat = 0;
-                content.lon = 0;
-                if (file != null) {
-                    await Task.Factory.StartNew(async () => { 
+            content.title = Title.Text;
+            content.description = Description.Text;
+            content.img_uuid = null;
+            content.lat = 0;
+            content.lon = 0;
+            if (file != null) {
+                await Task.Factory.StartNew(async () => { 
                     content.img_uuid = await App.ApiService.UploadFile("image/jpeg", file.GetStream());
                     Console.WriteLine("Reports inc +++ " + content.img_uuid);
-                        Console.WriteLine("geoloc available ?" + CrossGeolocator.Current.IsGeolocationAvailable);
+                    Console.WriteLine("geoloc available ?" + CrossGeolocator.Current.IsGeolocationAvailable);
                     if (CrossGeolocator.Current.IsGeolocationAvailable)
                     {
-                            Console.WriteLine(" GPS yesss");
-                            Position pos =  await CrossGeolocator.Current.GetPositionAsync();
+                        Console.WriteLine(" GPS yesss");
+                        Position pos =  await CrossGeolocator.Current.GetPositionAsync();
                         content.lat = pos.Latitude;
                         content.lon = pos.Longitude;
                     }
-                     else   { Console.WriteLine("GPS unavailable"); }
+                    else   { Console.WriteLine("GPS unavailable"); }
                     Console.WriteLine("geoloc; " + content.lat + content.lon);
                     ReportViewModel.sendReportCommand.Execute(content);
-                    });
-                }
-
-            };
-
-            pickPhoto.Clicked += async (sender, args) =>
-            {
-                if (!CrossMedia.Current.IsPickPhotoSupported)
-                {
-                    await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
-                    return;
-                }
-                file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
-                {
-                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
-
                 });
-
-
-                if (file == null)
-                    return;
-
-                image.Source = ImageSource.FromStream(() =>
-                {
-                    var stream = file.GetStream();
-                    return stream;
-
-                });
-                imageLoaded = true;
-                ImageRow.Height = GridLength.Star;
-            };
+            }
         }
 
         public void KeyboardChangeHandler(bool isShown)
