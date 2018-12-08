@@ -6,40 +6,41 @@
     <ContentPage.Content>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.1*"></ColumnDefinition>
-                <ColumnDefinition Width="0.8*"></ColumnDefinition>
-                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*" />
+                <ColumnDefinition Width="0.8*" />
+                <ColumnDefinition Width="0.1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-                <StackLayout Grid.Column="1" Grid.Row="1">
-                    <Label Text="Identifiant:" />
-                    <Entry x:Name="UsernameEntry" Placeholder="Identifiant" />
-                    <Label Text="Mot de passe:" />
-                <Entry x:Name="PasswordEntry" IsPassword="true" Placeholder="Mot de passe"/>
-                    <Label x:Name="MessageLabel" Opacity="0" Text="Label" TextColor="{StaticResource ErrorPrimary}" HorizontalTextAlignment="Center" />
+            <StackLayout Grid.Column="1" Grid.Row="1">
+                <Label Text="Identifiant:" />
+                <Entry x:Name="UsernameEntry" Placeholder="Identifiant" />
+                <Label Text="Mot de passe:" />
+                <Entry x:Name="PasswordEntry" IsPassword="true" Placeholder="Mot de passe" Completed="OnLoginButtonClicked"/>
+                <Label x:Name="MessageLabel" Opacity="0" Text="Label" TextColor="{StaticResource ErrorPrimary}"
+                       HorizontalTextAlignment="Center" />
 
-                    <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-                        <flex:FlexButton
-                            x:Name="LoginButton"
-                            Text="Login"
-                            HeightRequest="45"
-                            CornerRadius="3"
-                            VerticalOptions="FillAndExpand"
-                            HorizontalOptions="FillAndExpand"
-                            BackgroundColor="{StaticResource NavigationPrimary}"
-                            HighlightBackgroundColor="{StaticResource NavigationSecondary}"
-                            Clicked="OnLoginButtonClicked"
-                            AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
-                        <ActivityIndicator
-                            IsVisible="{Binding IsBusy}"
-                            IsRunning="{Binding IsBusy}"
-                            Color="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
-                    </AbsoluteLayout>
-                </StackLayout>
+                <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                    <flex:FlexButton
+                        x:Name="LoginButton"
+                        Text="Login"
+                        HeightRequest="45"
+                        CornerRadius="3"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        BackgroundColor="{StaticResource NavigationPrimary}"
+                        HighlightBackgroundColor="{StaticResource NavigationSecondary}"
+                        Clicked="OnLoginButtonClicked"
+                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                    <ActivityIndicator
+                        IsVisible="{Binding IsBusy}"
+                        IsRunning="{Binding IsBusy}"
+                        Color="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                </AbsoluteLayout>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
