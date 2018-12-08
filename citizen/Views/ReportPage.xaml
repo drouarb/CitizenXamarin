@@ -12,23 +12,21 @@
 
         <Grid VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="2*" />
                 <RowDefinition Height="0" x:Name="ImageRow" />
             </Grid.RowDefinitions>
             
             <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" Grid.Row="0" >
                 <StackLayout BackgroundColor="LightGray" Padding="1" VerticalOptions="FillAndExpand">
                     <StackLayout BackgroundColor="White" Padding="1" VerticalOptions="FillAndExpand">
-                        <ScrollView VerticalOptions="FillAndExpand">
-                            <Editor x:Name="Description" AutoSize="TextChanges" BackgroundColor="White" />
-                        </ScrollView>
+                            <Editor x:Name="Description" BackgroundColor="White" VerticalOptions="FillAndExpand" />
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
             <Image x:Name="image" Grid.Row="1" />
         </Grid>
         
-        <Grid>
+        <Grid x:Name="SubmitGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />

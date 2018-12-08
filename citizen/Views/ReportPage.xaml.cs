@@ -9,6 +9,7 @@ using Plugin.Media.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,6 +20,7 @@ namespace citizen.Views
     public partial class ReportPage : ContentPage
     {
         MediaFile file;
+        private bool imageLoaded = false;
         ReportService ReportService = new ReportService();
         ReportViewModel ReportViewModel = new ReportViewModel();
         ReportContentItem content = new ReportContentItem();
@@ -56,6 +58,7 @@ namespace citizen.Views
                     var stream = file.GetStream();
                     return stream;
                 });
+                imageLoaded = true;
                 ImageRow.Height = GridLength.Star;
             };
 
@@ -117,8 +120,24 @@ namespace citizen.Views
                     return stream;
 
                 });
+                imageLoaded = true;
                 ImageRow.Height = GridLength.Star;
             };
+        }
+
+        public void KeyboardChangeHandler(bool isShown)
+        {
+            if (isShown)
+            {
+                ImageRow.Height = 0;
+                SubmitGrid.IsVisible = false;
+            }
+            else
+            {
+                ImageRow.Height = imageLoaded ? GridLength.Star : 0;
+                SubmitGrid.IsVisible = true;
+            }
+            ForceLayout();
         }
     }
 }
