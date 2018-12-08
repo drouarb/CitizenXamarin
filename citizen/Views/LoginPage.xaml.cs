@@ -13,13 +13,24 @@ namespace citizen.Views
             InitializeComponent();
 
             BindingContext = _loginViewModel = new LoginViewModel();
+            _loginViewModel.AuthenticateCommand.CanExecuteChanged += AuthenticationCallbackHandler;
+            _loginViewModel.CheckIsAuthenticatedCommand.CanExecuteChanged += AuthenticationCallbackHandler;
         }
 
-        async void OnLoginButtonClicked(object sender, EventArgs e)
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            LoginButton.Text = "";
+            LoginButton.IsEnabled = false;
+            _loginViewModel.CheckIsAuthenticatedCommand.Execute(null);
+        }
+
+        void OnLoginButtonClicked(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(UsernameEntry.Text) || string.IsNullOrEmpty(PasswordEntry.Text))
             {
-                MessageLabel.Text = "Empty username/password";
+                MessageLabel.Text = "Veuillez renseigner tout les champs";
                 MessageLabel.Opacity = 100;
                 return;
             }
@@ -27,20 +38,24 @@ namespace citizen.Views
             LoginButton.Text = "";
             MessageLabel.Opacity = 0;
             LoginButton.IsEnabled = false;
-            _loginViewModel.IsBusy = true;
+            _loginViewModel.AuthenticateCommand.Execute(new Tuple<string, string>(UsernameEntry.Text, PasswordEntry.Text));
+        }
 
-            if (await App.ApiService.Authenticate(UsernameEntry.Text, PasswordEntry.Text))
+        protected void AuthenticationCallbackHandler(object sender, EventArgs e)
+        {
+            if (_loginViewModel.Authenticated)
             {
                 App.Current.MainPage = new MainPage();
+                return;
             }
-            else
-            {
-                MessageLabel.Text = "Invalid username/password";
-                MessageLabel.Opacity = 100;
             
-                LoginButton.IsEnabled = true;
-                _loginViewModel.IsBusy = false;
-                LoginButton.Text = "Login";
+            LoginButton.IsEnabled = true;
+            LoginButton.Text = "Login";
+
+            if (!String.IsNullOrEmpty(_loginViewModel.Error))
+            {
+                MessageLabel.Opacity = 100;
+                MessageLabel.Text = _loginViewModel.Error;
             }
         }
     }

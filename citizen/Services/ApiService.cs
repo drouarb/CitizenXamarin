@@ -8,6 +8,7 @@ using citizen.Models.Api;
 using citizen.Models;
 using Newtonsoft.Json;
 using System.IO;
+using System.Net;
 using Xamarin.Forms;
 
 namespace citizen.Services
@@ -22,9 +23,20 @@ namespace citizen.Services
             _httpClient.MaxResponseContentBufferSize = 256000;
         }
 
-        public bool IsAuthenticated()
+        public async Task<bool> IsAuthenticated()
         {
-            return Application.Current.Properties.ContainsKey("refreshToken");
+            Console.WriteLine("Has access token ? " + Application.Current.Properties.ContainsKey("accessToken"));
+            if (!Application.Current.Properties.ContainsKey("accessToken"))
+                return false;
+            
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Application.Current.Properties["accessToken"].ToString());
+            HttpResponseMessage resp = await _httpClient.GetAsync("https://oauth.citizen.navispeed.eu/token/test");
+            
+            Console.WriteLine("API AccessToken check: " + resp.StatusCode);
+            if (resp.StatusCode == HttpStatusCode.OK)
+                return true;
+
+            return await RefreshToken();
         }
 
         public async Task<bool> Authenticate(string Username, string Password)

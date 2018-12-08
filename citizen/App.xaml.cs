@@ -19,18 +19,10 @@ namespace citizen
         public App()
         {
             InitializeComponent();
-
             MessagingCenter.Instance.Subscribe<LocalNotificationTappedEvent>(this,
                 typeof(LocalNotificationTappedEvent).FullName, NotificationRouter);
-
-            if (!ApiService.IsAuthenticated())
-            {
-                MainPage = new LoginPage();
-            }
-            else
-            {
-                MainPage = new MainPage();
-            }
+            
+            MainPage = new LoginPage();
         }
 
         protected override void OnStart()
@@ -63,6 +55,7 @@ namespace citizen
                     {
                         Console.WriteLine(ex);
                     }
+
                     return;
             }
         }

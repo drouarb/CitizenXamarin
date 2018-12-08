@@ -30,7 +30,7 @@ namespace citizen.Services
 
         public async Task FetchNotifications()
         {
-            if (App.ApiService.IsAuthenticated() == false)
+            if (!await App.ApiService.IsAuthenticated())
                 return;
 
             await GetNotificationsAsync(true);
