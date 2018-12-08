@@ -56,6 +56,7 @@ namespace citizen.Views
                     var stream = file.GetStream();
                     return stream;
                 });
+                ImageRow.Height = GridLength.Star;
             };
 
             send.Clicked += async (sender, args) =>
@@ -116,54 +117,8 @@ namespace citizen.Views
                     return stream;
 
                 });
+                ImageRow.Height = GridLength.Star;
             };
-
-            /*           takeVideo.Clicked += async (sender, args) =>
-                       {
-                           if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakeVideoSupported)
-                           {
-                               DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
-                               return;
-                           }
-
-                           var file = await CrossMedia.Current.TakeVideoAsync(new Plugin.Media.Abstractions.StoreVideoOptions
-                           {
-                               Name = "video.mp4",
-                               Directory = "DefaultVideos",
-                           });
-
-                           if (file == null)
-                               return;
-
-                           DisplayAlert("Video Recorded", "Location: " + file.Path, "OK");
-
-                           file.Dispose();
-                       };
-
-                       pickVideo.Clicked += async (sender, args) =>
-                       {
-                           if (!CrossMedia.Current.IsPickVideoSupported)
-                           {
-                               DisplayAlert("Videos Not Supported", ":( Permission not granted to videos.", "OK");
-                               return;
-                           }
-                           var file = await CrossMedia.Current.PickVideoAsync();
-
-                           if (file == null)
-                               return;
-
-                           DisplayAlert("Video Selected", "Location: " + file.Path, "OK");
-                           file.Dispose();
-                       };*/
-        }
-
-        public ReportPage(Button takePhoto, Button pickPhoto, Button takeVideo, Button pickVideo, Image image)
-        {
-            this.takePhoto = takePhoto;
-            this.pickPhoto = pickPhoto;
-            /*this.takeVideo = takeVideo;
-            this.pickVideo = pickVideo;*/
-            this.image = image;
         }
     }
 }
