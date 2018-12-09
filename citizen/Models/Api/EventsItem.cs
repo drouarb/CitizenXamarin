@@ -16,7 +16,7 @@ namespace citizen.Views
         [JsonProperty("end")]
         public DateTime end { get; set; }
         [JsonProperty("img_uuid")]
-        public Guid img_uuid { get; set; }
+        public string img_uuid { get; set; } //dont change or it will crash if there is no img
         [JsonProperty("created")]
         public DateTime created { get; set; }
         [JsonProperty("updated")]

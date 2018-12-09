@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="citizen.Views.EventsPage">
+             x:Class="citizen.Views.EventsPage" Title="{Binding Title}">
   <ContentPage.Content>
         <ListView x:Name="EventListView" ItemsSource="{Binding Events}" VerticalOptions="FillAndExpand"
                       HasUnevenRows="true" RefreshCommand="{Binding LoadEventCommand}" IsPullToRefreshEnabled="true"
@@ -11,11 +11,10 @@
             <DataTemplate>
                 <ViewCell>
                     <StackLayout Padding="10">
-                        <Label Text="{Binding Topic}" LineBreakMode="NoWrap"
+                        <Label Text="{Binding name}" LineBreakMode="NoWrap"
                                        Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
-                        <Label Text="{Binding Created}" LineBreakMode="NoWrap"
+                        <Label Text="{Binding datetime}" LineBreakMode="NoWrap"
                                        Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
-                        <WebView Source="{Binding Mode=OneTime}" InputTransparent="False" HorizontalOptions="CenterAndExpand"></WebView>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>

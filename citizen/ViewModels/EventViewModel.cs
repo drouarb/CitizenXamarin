@@ -10,9 +10,8 @@ namespace citizen.Views
     internal class EventViewModel : BaseViewModel
     {
         public Command LoadEventCommand { get; set; }
-        public ObservableCollection<EventsItem> Events;
-        private EventService eventService;
-
+        public ObservableCollection<EventsItem> Events { get; set; }
+        private EventService eventService = new EventService();
 
         public EventViewModel()
         {
