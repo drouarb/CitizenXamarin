@@ -13,16 +13,16 @@ namespace citizen.ViewModels
 
         public Command LoadNewsDetailsCommand { get; set; }
 
-        private NewsDetailsService newsDetailsService;
+        private NewsDetailsService NewsDetailsService;
 
-        public NewsDetailsViewModel()
+        public NewsDetailsViewModel(Guid newsUuid, String title)
         {
-            Title = "news";
-            LoadNewsDetailsCommand = new Command<Guid>(async (uuid) => await ExecuteLoadNewsDetailsCommand(uuid));
-            newsDetailsService = new NewsDetailsService(news);
+            Title = title;
+            NewsDetailsService = new NewsDetailsService(newsUuid);
+            LoadNewsDetailsCommand = new Command(async () => ExecuteLoadNewsDetailsCommand());
         }
 
-        async Task ExecuteLoadNewsDetailsCommand(Guid uuid)
+        async Task ExecuteLoadNewsDetailsCommand()
         {
             Console.WriteLine("is busy");
             if (IsBusy)
@@ -33,7 +33,7 @@ namespace citizen.ViewModels
             try
             {
                 Console.WriteLine("news");
-                var item = await newsDetailsService.GetItemAsync(uuid.ToString(), true);
+                var item = await NewsDetailsService.GetItemAsync(true);
                 news = item;
                 Console.WriteLine("ITEMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM: " + news.content);
 

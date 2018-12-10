@@ -11,13 +11,15 @@ namespace citizen.Services.Api
 
     class NewsDetailsService
     {
+        private Guid uuid;
         private NewsItem news;
 
-        public NewsDetailsService(NewsItem item) { 
-            this.news = item;
+        public NewsDetailsService(Guid uuid)
+        {
+            this.uuid = uuid;
         }
 
-        public async Task<NewsItem> GetItemAsync(string uuid, bool forceRefresh = false)
+        public async Task<NewsItem> GetItemAsync(bool forceRefresh = false)
         {
             if (forceRefresh == false)
                 return news;

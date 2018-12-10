@@ -19,16 +19,23 @@ namespace citizen.Views
 		{
 			InitializeComponent();
             BindingContext = this.viewModel = viewModel;
-        }
+            this.viewModel.LoadNewsDetailsCommand.CanExecuteChanged += HandleNewsLoaded;
+		}
+
+		public void HandleNewsLoaded(object sender, EventArgs e)
+		{
+			var browser = new WebView();
+			var htmlSource = new HtmlWebViewSource();
+			htmlSource.Html = "<h2>" + viewModel.news.title + "</h2>" + "<h3>" + viewModel.news.subtitle + "</h3>" + viewModel.news.content;
+			browser.Source = htmlSource;
+			Content = browser;
+		}
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            var browser = new WebView();
-            var htmlSource = new HtmlWebViewSource();
-            htmlSource.Html = "<h2>" + viewModel.news.title + "</h2>" + "<h3>" + viewModel.news.subtitle + "</h3>" + viewModel.news.content;
-            browser.Source = htmlSource;
-            Content = browser;
+            
+            viewModel.LoadNewsDetailsCommand.Execute(null);
         }
     }
 }

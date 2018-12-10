@@ -16,15 +16,7 @@ namespace citizen.Views
             InitializeComponent();
 
             BindingContext = new NewsViewModel();
-            newsDetailsViewModel = new NewsDetailsViewModel();
-            newsDetailsViewModel.LoadNewsDetailsCommand.CanExecuteChanged += fetchNewsHandler;
             NewsListView.BeginRefresh();
-        }
-
-        void fetchNewsHandler(object sender, EventArgs a)
-        {
-            Console.WriteLine("nav to news");
-            Navigation.PushAsync(new NewsDetailsView(newsDetailsViewModel));
         }
 
         void NewsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -32,9 +24,7 @@ namespace citizen.Views
             var news = e.SelectedItem as NewsItem;
             if (news == null)
                 return;
-            Console.WriteLine("fetching details news" + news.Uuid);
-            newsDetailsViewModel.LoadNewsDetailsCommand.Execute(news.Uuid);
-            Console.WriteLine("wat" + news.Uuid);
+            Navigation.PushAsync(new NewsDetailsView(new NewsDetailsViewModel(news.Uuid, news.title)));
             NewsListView.SelectedItem = null;
         }
     }
