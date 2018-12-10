@@ -55,7 +55,18 @@ namespace citizen
                     {
                         Console.WriteLine(ex);
                     }
-
+                    return;
+                
+                case "news":
+                    try
+                    {
+                        Console.WriteLine("Notification News " + route[2]);
+                        ((MainPage) MainPage).CurrentPage.Navigation.PushAsync(new NewsDetailsView(new NewsDetailsViewModel(new Guid(route[2]), "News")));
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                    }
                     return;
             }
         }
