@@ -16,7 +16,7 @@ namespace citizen.Views
                 return events;
 
             string rawNewsDetails = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/events/all", HttpMethod.Get);
-            Console.WriteLine(rawNewsDetails);
+            Console.WriteLine("get all events" + rawNewsDetails);
             events = JsonConvert.DeserializeObject<List<EventsItem>>(rawNewsDetails);
             Console.WriteLine("events in thte bag " + events.Count);
             return events;
@@ -25,8 +25,8 @@ namespace citizen.Views
         public async Task<EventsItem> GetEventDetailsAsync(string uuid, bool forceRefresh = false)
         {
 
-            string rawNewsDetails = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/events/all", HttpMethod.Get);
-            Console.WriteLine(rawNewsDetails);
+            string rawNewsDetails = await App.ApiService.ApiRequest("https://citizen.navispeed.eu/api/events/details/" + uuid, HttpMethod.Get);
+            Console.WriteLine("event detail" + rawNewsDetails);
             return JsonConvert.DeserializeObject<EventsItem>(rawNewsDetails);
         }
     }

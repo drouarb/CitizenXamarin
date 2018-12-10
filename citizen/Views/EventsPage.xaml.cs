@@ -23,12 +23,14 @@ namespace citizen.Views
         {
             //TODO details 
         }
-
-#pragma warning disable CS1998 // Cette méthode async n'a pas d'opérateur 'await' et elle s'exécutera de façon synchrone
+        
         async void OnEventSelected(object sender, SelectedItemChangedEventArgs args)
-#pragma warning restore CS1998 // Cette méthode async n'a pas d'opérateur 'await' et elle s'exécutera de façon synchrone
         {
-            //TODO details 
+            if (args.SelectedItem == null)
+                return;
+            var _event = args.SelectedItem as EventsItem;
+            await Navigation.PushAsync(new EventDetailPage(_event));
+            EventListView.SelectedItem = null;
         }
     }
 }

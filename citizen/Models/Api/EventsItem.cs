@@ -6,7 +6,7 @@ namespace citizen.Views
     public class EventsItem
     {
         [JsonProperty("uuid")]
-        public Guid Uuid { get; set; }
+        public Guid uuid { get; set; }
         [JsonProperty("name")]
         public string name { get; set; }
         [JsonProperty("description")]
