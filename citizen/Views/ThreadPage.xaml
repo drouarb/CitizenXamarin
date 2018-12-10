@@ -20,6 +20,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="create" Text="Create Thread" HorizontalOptions="Center" VerticalOptions="LayoutOptions.End"/>
+        <Button x:Name="create" Text="Créer un nouveau sujet" HorizontalOptions="Center" VerticalOptions="End"/>
     </StackLayout>
 </ContentPage>

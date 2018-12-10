@@ -24,8 +24,8 @@ namespace citizen.Views
                 PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
                 {
                     InputType = InputType.Name,
-                    OkText = "Create",
-                    Title = "Create Thread",
+                    OkText = "Créer",
+                    Title = "Créer un nouveau sujet"
                 });
                 if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
                 {
