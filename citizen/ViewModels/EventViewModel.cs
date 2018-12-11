@@ -15,7 +15,7 @@ namespace citizen.Views
 
         public EventViewModel()
         {
-            Title = "Event";
+            Title = "Événements";
             Events = new ObservableCollection<EventsItem>();
             LoadEventCommand = new Command(async () => await ExecuteLoadEventCommand());
         }

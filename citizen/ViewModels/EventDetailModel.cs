@@ -15,6 +15,7 @@ namespace citizen.Views
         public EventDetailModel(EventsItem @event)
         {
             _event = @event;
+            Title = _event.name;
             LoadDetailCommand = new Command(async () => await ExecuteLoadEventCommand());
         }
 

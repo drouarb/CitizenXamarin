@@ -179,6 +179,9 @@
     <BundleResource Include="Resources\agora.png" />
     <BundleResource Include="Resources\agora%402x.png" />
     <BundleResource Include="Resources\agora%404x.png" />
+    <BundleResource Include="Resources\calendar.png" />
+    <BundleResource Include="Resources\calendar%402x.png" />
+    <BundleResource Include="Resources\calendar%404x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -31,10 +31,10 @@
                 <views:NewsPage />
             </x:Arguments>
         </NavigationPage>
-        <NavigationPage Title="Calendrier">
+        <NavigationPage Title="Événements">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="news.png" />
+                    <On Platform="iOS" Value="calendar.png" />
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
