@@ -58,6 +58,13 @@ namespace citizen.Views
                     Console.WriteLine(choice.Text);
                     var PrimaryColor = (Color) App.Current.Resources["NavigationPrimary"];
                     var button = new Flex.Controls.FlexButton();
+
+                    if (AlreadyVoted)
+                    {
+                        button.IsEnabled = false;
+                        button.Opacity = 100;
+                    }
+                    
                     button.HorizontalOptions = LayoutOptions.Fill;
                     button.Text = choice.Text;
                     button.CornerRadius = 15;
@@ -78,7 +85,21 @@ namespace citizen.Views
                     button.ToggleMode = true;
                     button.IsToggled = choice.Selected;
                     if (choice.Selected)
+                    {
+                        foreach (var bb in PollChoicesGrid.Children)
+                        {
+                            var b = bb as Flex.Controls.FlexButton;
+                            if (b == null)
+                                continue;
+                            b.IsEnabled = false;
+                            b.Opacity = 100;
+                            b.HighlightBackgroundColor = PrimaryColor;
+                            b.HighlightForegroundColor = Color.White;
+                            b.ForegroundColor = PrimaryColor;
+                            b.BackgroundColor = Color.White;
+                        }
                         AlreadyVoted = true;
+                    }
 
                     button.TouchedDown += HandleChoiceSelected;
 
