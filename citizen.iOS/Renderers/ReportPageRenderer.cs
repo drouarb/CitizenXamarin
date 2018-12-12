@@ -76,6 +76,7 @@ namespace citizen.iOS.Renderers
             page.KeyboardChangeHandler(false);
 
             Element.Layout(bounds);
+            savedBounds = false;
         }
         
         void UnregisterForKeyboardNotifications()

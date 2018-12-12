@@ -74,6 +74,7 @@ namespace citizen.iOS.Renderers
             Console.WriteLine("Hide Keyboard ThreadDetailsPage " + result);
 
             Element.Layout(bounds);
+            savedBounds = false;
         }
         
         void UnregisterForKeyboardNotifications()
