@@ -32,21 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Include="Views\Cells\ThreadDetailsSelfViewCell.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </Page>
-    <Page Include="Views\LoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </Page>
-    <Page Include="Views\PollDetailsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Views\EventsPage.xaml.cs">
       <DependentUpon>EventsPage.xaml</DependentUpon>
     </Compile>
@@ -62,7 +47,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Services\View1.xaml">
+    <EmbeddedResource Update="Services\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Services\PollDetailsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Cells\ThreadDetailsSelfViewCell.xaml">
