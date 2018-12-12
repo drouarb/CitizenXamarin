@@ -45,8 +45,11 @@ namespace citizen.ViewModels
                 var items = await AgoraService.GetPostsAsync(true);
                 foreach (var item in items)
                 {
-                    item.Author = await AgoraService.GetUserNameById(item.Author);
-                    Posts.Add(item);
+                    item.Author = await AgoraService.GetUserNameById(item.Author);   
+                }
+                foreach (var item in items)
+                {
+                    Posts.Insert(0, item);
                 }
             }
             catch (Exception ex)
