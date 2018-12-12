@@ -32,6 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Include="Views\Cells\ThreadDetailsSelfViewCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator></Generator>
+    </Page>
     <Page Include="Views\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator></Generator>

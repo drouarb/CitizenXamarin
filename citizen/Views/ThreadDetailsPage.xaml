@@ -1,6 +1,12 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
+             xmlns:helpers="clr-namespace:citizen.Helpers;assembly=citizen"
              x:Class="citizen.Views.ThreadDetailsPage" Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:ThreadDetailsTemplateSelector x:Key="ThreadDetailsTemplateSelector"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80*"/>
@@ -8,17 +14,8 @@
         </Grid.RowDefinitions>
         <ListView x:Name="PostListView" ItemsSource="{Binding Posts}" VerticalOptions="FillAndExpand"
                       HasUnevenRows="true" RefreshCommand="{Binding LoadPostCommand}" IsPullToRefreshEnabled="true"
-                      IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement" Grid.Row="0">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Padding="10">
-                            <Label Text="{Binding Author}" LineBreakMode="NoWrap" FontSize="16" />
-                            <Label Text="{Binding Message}" LineBreakMode="NoWrap" FontSize="13" />
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement"
+                      ItemTemplate="{StaticResource ThreadDetailsTemplateSelector}" Grid.Row="0">
         </ListView>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

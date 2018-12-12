@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+          x:Class="citizen.Views.Cells.ThreadDetailsSelfViewCell">
+        <Frame BackgroundColor="White"
+            Padding="10"
+            HasShadow="false"
+            Margin="10,0,10,0">
+            <StackLayout>
+                <Label Text="{Binding Author}" />
+                <Frame BackgroundColor="LightBlue" Padding="10" HasShadow="false">
+                    <Label Text="{Binding Message}"/>
+                </Frame>
+            </StackLayout>
+        </Frame>
+</ViewCell>
