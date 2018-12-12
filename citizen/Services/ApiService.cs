@@ -88,7 +88,7 @@ namespace citizen.Services
             /* testing refresh token
              * to be removed in final release
              */
-            Console.WriteLine("does refresh token work ? " + await RefreshToken());
+            //Console.WriteLine("does refresh token work ? " + await RefreshToken());
            
            //req.Content = new StringContent("test");
            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Application.Current.Properties["accessToken"].ToString());
