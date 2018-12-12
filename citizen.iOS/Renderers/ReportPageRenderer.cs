@@ -48,7 +48,7 @@ namespace citizen.iOS.Renderers
 
             NSValue result = (NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey));
             
-            Console.WriteLine("Show Keyboard " + result);
+            Console.WriteLine("Show Keyboard ReportPage " + result);
             CGSize keyboardSize = result.RectangleFValue.Size;
             Console.WriteLine(keyboardSize);
 
@@ -72,7 +72,7 @@ namespace citizen.iOS.Renderers
 
             NSValue result = (NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey));
 
-            Console.WriteLine("Hide Keyboard " + result);
+            Console.WriteLine("Hide Keyboard ReportPage " + result);
             page.KeyboardChangeHandler(false);
 
             Element.Layout(bounds);

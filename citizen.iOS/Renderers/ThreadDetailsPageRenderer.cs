@@ -14,7 +14,7 @@ namespace citizen.iOS.Renderers
     {
         NSObject _keyboardShowObserver;
         NSObject _keyboardHideObserver;
-        private bool savedBounds = false;
+        private bool savedBounds;
         private Rectangle bounds;
         
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
@@ -50,7 +50,7 @@ namespace citizen.iOS.Renderers
             if (result == null)
                 return;
             
-            Console.WriteLine("Show Keyboard " + result);
+            Console.WriteLine("Show Keyboard ThreadDetailsPage " + result);
             CGSize keyboardSize = result.RectangleFValue.Size;
             Console.WriteLine(keyboardSize);
 
@@ -71,7 +71,7 @@ namespace citizen.iOS.Renderers
                 return;
 
             NSValue result = (NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey));
-            Console.WriteLine("Hide Keyboard " + result);
+            Console.WriteLine("Hide Keyboard ThreadDetailsPage " + result);
 
             Element.Layout(bounds);
         }
