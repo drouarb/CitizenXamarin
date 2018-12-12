@@ -15,17 +15,17 @@
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="0" x:Name="ImageRow" />
             </Grid.RowDefinitions>
-            
-            <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" Grid.Row="0" >
+
+            <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" Grid.Row="0">
                 <StackLayout BackgroundColor="LightGray" Padding="1" VerticalOptions="FillAndExpand">
                     <StackLayout BackgroundColor="White" Padding="1" VerticalOptions="FillAndExpand">
-                            <Editor x:Name="Description" BackgroundColor="White" VerticalOptions="FillAndExpand" />
+                        <Editor x:Name="Description" BackgroundColor="White" VerticalOptions="FillAndExpand" />
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
             <Image x:Name="image" Grid.Row="1" />
         </Grid>
-        
+
         <Grid x:Name="SubmitGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
@@ -37,6 +37,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <flex:FlexButton Clicked="TakePhotoHandler"
+                                 x:Name="TakePhotoButton"
                                  Grid.Column="0"
                                  VerticalOptions="FillAndExpand"
                                  HorizontalOptions="FillAndExpand"
@@ -44,6 +45,7 @@
                                  HighlightBackgroundColor="{StaticResource NavigationSecondary}"
                                  Text="Prendre une photo" />
                 <flex:FlexButton Clicked="PickPhotoHandler"
+                                 x:Name="PickPhotoButton"
                                  Grid.Column="1"
                                  VerticalOptions="FillAndExpand"
                                  HorizontalOptions="FillAndExpand"
@@ -51,14 +53,24 @@
                                  HighlightBackgroundColor="{StaticResource NavigationSecondary}"
                                  Text="Album photo" />
             </Grid>
-            <flex:FlexButton
-                Grid.Row="1"
-                Clicked="SendReportHandler"
-                Text="Envoyer le Signalement"
-                BackgroundColor="{StaticResource NavigationPrimary}"
-                HighlightBackgroundColor="{StaticResource NavigationSecondary}"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" />
+            <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" 
+                            AbsoluteLayout.LayoutBounds="0,0,1,1"
+                            Grid.Row="1">
+                <flex:FlexButton
+                    x:Name="SubmitButton"
+                    Clicked="SendReportHandler"
+                    Text="Envoyer le Signalement"
+                    BackgroundColor="{StaticResource NavigationPrimary}"
+                    HighlightBackgroundColor="{StaticResource NavigationSecondary}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand" 
+                    AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                <ActivityIndicator
+                    x:Name="SubmitIndicator"
+                    IsVisible="False"
+                    IsRunning="False"
+                    Color="White" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+            </AbsoluteLayout>
         </Grid>
     </StackLayout>
 </ContentPage>

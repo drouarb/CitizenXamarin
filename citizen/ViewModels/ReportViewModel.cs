@@ -38,6 +38,7 @@ namespace citizen.ViewModels
             finally
             {
                 IsBusy = false;
+                sendReportCommand.ChangeCanExecute();
             }
 
         }
