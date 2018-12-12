@@ -30,7 +30,7 @@ namespace citizen.Views
 			htmlSource.Html = "<html>" +
 			                  "		<head>" +
 			                  "			<link href='https://v1.grommet.io/assets/css/index-vanilla.css' rel='stylesheet' type='text/css'>" +
-			                  "			<link href='http://192.168.1.30/style.css' rel='stylesheet' type='text/css'>" +
+			                  "			<link href='https://raw.githubusercontent.com/drouarb/CitizenXamarin/master/style.css' rel='stylesheet' type='text/css'>" +
 			                  "		</head>" +
 			                  "		<body>" +
 			                  "		<div style='width:90%;margin: 0 auto;' >" +
