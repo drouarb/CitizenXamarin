@@ -28,8 +28,6 @@
 	<string>eu.citizen.xamarin.Citizen</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-  <key>NSCalendarsUsageDescription</key>
-  <string>Needs Calendar Permission</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
