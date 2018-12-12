@@ -42,6 +42,10 @@ namespace citizen.iOS.Renderers
 
         void OnKeyboardShow(object sender, UIKeyboardEventArgs args)
         {
+            ReportPage page = Element as ReportPage;
+            if (page == null)
+                return;
+
             NSValue result = (NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey));
             
             Console.WriteLine("Show Keyboard " + result);
@@ -54,7 +58,7 @@ namespace citizen.iOS.Renderers
                 bounds = Element.Bounds;
             }
             
-            (Element as ReportPage).KeyboardChangeHandler(true);
+            page.KeyboardChangeHandler(true);
 
             var newBounds = new Rectangle(bounds.Left, bounds.Top, bounds.Width, App.Current.MainPage.Height - keyboardSize.Height - 100);
             Element.Layout(newBounds);
@@ -62,10 +66,14 @@ namespace citizen.iOS.Renderers
 
         void OnKeyboardHide(object sender, UIKeyboardEventArgs args)
         {
+            ReportPage page = Element as ReportPage;
+            if (page == null)
+                return;
+
             NSValue result = (NSValue)args.Notification.UserInfo.ObjectForKey(new NSString(UIKeyboard.FrameEndUserInfoKey));
 
             Console.WriteLine("Hide Keyboard " + result);
-            (Element as ReportPage).KeyboardChangeHandler(false);
+            page.KeyboardChangeHandler(false);
 
             Element.Layout(bounds);
         }
