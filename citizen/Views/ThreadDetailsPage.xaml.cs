@@ -30,5 +30,10 @@ namespace citizen.Views
                 UserPost.Text = "";
             }
         }
+
+        private void HandleItemSelected(object sender, EventArgs e)
+        {
+            PostListView.SelectedItem = null;
+        }
     }
 }

@@ -15,7 +15,8 @@
         <ListView x:Name="PostListView" ItemsSource="{Binding Posts}" VerticalOptions="FillAndExpand"
                       HasUnevenRows="true" RefreshCommand="{Binding LoadPostCommand}" IsPullToRefreshEnabled="true"
                       IsRefreshing="{Binding IsBusy, Mode=OneWay}" CachingStrategy="RecycleElement"
-                      ItemTemplate="{StaticResource ThreadDetailsTemplateSelector}" Grid.Row="0">
+                      ItemTemplate="{StaticResource ThreadDetailsTemplateSelector}" Grid.Row="0" 
+                      ItemSelected="HandleItemSelected">
         </ListView>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
