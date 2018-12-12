@@ -24,7 +24,6 @@ namespace citizen.Views
         ReportService ReportService = new ReportService();
         ReportViewModel ReportViewModel = new ReportViewModel();
         ReportContentItem content = new ReportContentItem();
-
         public ReportPage()
         {
             InitializeComponent();

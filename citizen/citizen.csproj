@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
+    <PackageReference Include="CClarke.Plugin.Calendars" Version="1.0.0" />
     <PackageReference Include="Forms.Controls.FlexButton" Version="0.8.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Plugin.LocalNotification" Version="2.0.5" />
