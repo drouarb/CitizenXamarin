@@ -16,6 +16,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <StackLayout Grid.Column="1" Grid.Row="1">
+                <Image Source="Logo_Citizen.png"/>
                 <Label Text="Identifiant:" />
                 <Entry x:Name="UsernameEntry" Placeholder="Identifiant">
                     <Entry.Keyboard>
