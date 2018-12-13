@@ -5,6 +5,7 @@
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="consultation.png" />
+                    <On Platform="Android" Value="consultation.png"/>
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
@@ -13,8 +14,9 @@
         </NavigationPage>
         <NavigationPage Title="Agora">
             <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
+                <OnPlatform x:TypeArguments="FileImageSource" >
                     <On Platform="iOS" Value="agora.png" />
+                    <On Platform="Android" Value="agora.png" />
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
@@ -25,6 +27,7 @@
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="news.png" />
+                    <On Platform="Android" Value="news.png"/>
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
@@ -35,6 +38,7 @@
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="calendar.png" />
+                    <On Platform="Android" Value="calendar.png"/>
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
@@ -45,6 +49,7 @@
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="iOS" Value="report.png" />
+                    <On Platform="Android" Value="report.png"/>
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
