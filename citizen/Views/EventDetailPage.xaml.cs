@@ -23,48 +23,61 @@ namespace citizen.Views
             InitializeComponent();
             BindingContext = viewModel = new EventDetailModel(_event);
             viewModel.LoadDetailCommand.Execute(null);
-
-            addEvent.Clicked += async (sender, args) =>
+        }
+        
+        public async void AddEventHandler(object sender, EventArgs e)
+        {
+            AddToCalendarButton.IsEnabled = false;
+            AddToCalendarButton.Text = "";
+            AddToCalendarActivityIndicator.IsVisible = true;
+            AddToCalendarActivityIndicator.IsRunning = true;
+            
+            Console.WriteLine("requesting permission");
+            await CrossPermissions.Current.RequestPermissionsAsync(Permission.Calendar);
+            Console.WriteLine("checking permission");
+            var hasPermission = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Calendar);
+            Console.WriteLine("permission calendar : " + hasPermission.ToString()); 
+            if (hasPermission != PermissionStatus.Granted)
             {
-                Console.WriteLine("requesting permission");
-                await CrossPermissions.Current.RequestPermissionsAsync(Permission.Calendar);
-                Console.WriteLine("checking permission");
-                var hasPermission = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Calendar);
-                Console.WriteLine("permission calendar : " + hasPermission.ToString()); 
-                if (hasPermission != PermissionStatus.Granted)
-                {
-                    await DisplayAlert("Pas de Droits", "L'application ne dispose pas des droits pour manipuler le calendrier", "Oups");
-                    return;
-                }
-                Calendar defaultCalendar = new Calendar();
-                defaultCalendar.Color = "#7635EB";
-                defaultCalendar.Name = "Citizen";
-                var calendars = await CrossCalendars.Current.GetCalendarsAsync();
-                Console.WriteLine("trying to find calendar in ");
+                await DisplayAlert("Pas de Droits", "L'application ne dispose pas des droits pour manipuler le calendrier", "Oups");
+                AddToCalendarButton.IsEnabled = true;
+                AddToCalendarButton.Text = "Ajouter à mon calendrier";
+                AddToCalendarActivityIndicator.IsVisible = false;
+                AddToCalendarActivityIndicator.IsRunning = false;
+                return;
+            }
+            Calendar defaultCalendar = new Calendar();
+            defaultCalendar.Color = "#7635EB";
+            defaultCalendar.Name = "Citizen";
+            var calendars = await CrossCalendars.Current.GetCalendarsAsync();
+            Console.WriteLine("trying to find calendar in ");
 
-                foreach (var calendar in calendars)
+            foreach (var calendar in calendars)
+            {
+                Console.WriteLine("calendar is  " + calendar.CanEditEvents);
+                if (calendar.CanEditEvents)
                 {
-                    Console.WriteLine("calendar is  " + calendar.CanEditEvents);
-                    if (calendar.CanEditEvents)
-                    {
-                        Console.WriteLine("found calendar");
-                        defaultCalendar = calendar;
-                        break;
-                    }
+                    Console.WriteLine("found calendar");
+                    defaultCalendar = calendar;
+                    break;
                 }
-                var calendarEvent = new CalendarEvent
-                {
-                    Name = viewModel._event.name,
-                    Start = viewModel._event.datetime,
-                    End = viewModel._event.end,
-                    Reminders = new List<CalendarEventReminder> { new CalendarEventReminder() }
-                };
-                Console.WriteLine("pls werk");
-                await CrossCalendars.Current.AddOrUpdateEventAsync(defaultCalendar, calendarEvent);
-                Console.WriteLine("no");
+            }
+            var calendarEvent = new CalendarEvent
+            {
+                Name = viewModel._event.name,
+                Start = viewModel._event.datetime,
+                End = viewModel._event.end,
+                Reminders = new List<CalendarEventReminder> { new CalendarEventReminder() }
             };
-
-
+            Console.WriteLine("pls werk");
+            await CrossCalendars.Current.AddOrUpdateEventAsync(defaultCalendar, calendarEvent);
+            Console.WriteLine("no");
+            
+            AddToCalendarButton.IsEnabled = true;
+            AddToCalendarButton.Text = "Ajouter à mon calendrier";
+            AddToCalendarActivityIndicator.IsVisible = false;
+            AddToCalendarActivityIndicator.IsRunning = false;
+            DisplayAlert("Succès", "Evenement ajouté au calendrier avec succès", "Fermer");
         }
     }
 }

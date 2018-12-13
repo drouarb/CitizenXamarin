@@ -1,12 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
              x:Class="citizen.Views.EventDetailPage" Title="{Binding Title}">
-  <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding _event.name}" />
-            <Label Text="{Binding _event.description}" />
-            <Button x:Name="addEvent" Text="Ajouter à mon calendrier" HorizontalOptions="Center" VerticalOptions="End"/>
-        </StackLayout>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="80*" />
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="90*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <ScrollView Grid.Row="1" Grid.Column="1">
+                <StackLayout>
+                    <Label Text="{Binding _event.name}" FontAttributes="Bold" FontSize="25" />
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Début: " FontAttributes="Italic" FontSize="11" />
+                                <Span Text="{Binding _event.datetime}" FontAttributes="Italic" FontSize="12" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Fin: " FontAttributes="Italic" FontSize="11" />
+                                <Span Text="{Binding _event.end}" FontAttributes="Italic" FontSize="12" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label Text="{Binding _event.description}" />
+                </StackLayout>
+            </ScrollView>
+            <AbsoluteLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" Grid.Row="2"
+                            Grid.Column="1">
+                <flex:FlexButton Clicked="AddEventHandler"
+                                 x:Name="AddToCalendarButton"
+                                 VerticalOptions="FillAndExpand"
+                                 HorizontalOptions="FillAndExpand"
+                                 BackgroundColor="{StaticResource NavigationPrimary}"
+                                 HighlightBackgroundColor="{StaticResource NavigationSecondary}"
+                                 Text="Ajouter à mon calendrier"
+                                 AbsoluteLayout.LayoutFlags="All"
+                                 AbsoluteLayout.LayoutBounds="0,0,1,1" />
+                <ActivityIndicator
+                    x:Name="AddToCalendarActivityIndicator"
+                    IsVisible="False"
+                    IsRunning="False"
+                    Color="White"
+                    AbsoluteLayout.LayoutFlags="All"
+                    AbsoluteLayout.LayoutBounds="0,0,1,1" />
+            </AbsoluteLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
