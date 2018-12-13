@@ -19,37 +19,139 @@ namespace citizen.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReportPage : ContentPage
     {
+        MediaFile file;
+        private bool imageLoaded = false;
         ReportService ReportService = new ReportService();
         ReportViewModel ReportViewModel = new ReportViewModel();
-        private bool imageLoaded = false;
-
+        ReportContentItem content = new ReportContentItem();
         public ReportPage()
         {
-            ReportViewModel.sendReportCommand.CanExecuteChanged += ReportSentHandler;
-            ReportViewModel.SubmitIndicator = SubmitIndicator;
-            ReportViewModel.SubmitButton = SubmitButton;
-            ReportViewModel.TakePhotoButton = TakePhotoButton;
-            ReportViewModel.PickPhotoButton = PickPhotoButton;
-            ReportViewModel.title = Title;
-            ReportViewModel.Description = Description;
-            ReportViewModel.image = image;
-            ReportViewModel.ImageRow = ImageRow;
             InitializeComponent();
+            ReportViewModel.sendReportCommand.CanExecuteChanged += ReportSentHandler;
         }
 
-        public void TakePhotoHandler(object sender, EventArgs e)
+        public async void TakePhotoHandler(object sender, EventArgs e)
         {
-            ReportViewModel.takePhotoCommand.Execute(null);
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                return;
+            }
+
+            file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            {
+                Directory = "Test",
+                SaveToAlbum = true,
+                CompressionQuality = 75,
+                CustomPhotoSize = 50,
+                PhotoSize = PhotoSize.MaxWidthHeight,
+                MaxWidthHeight = 2000,
+                DefaultCamera = CameraDevice.Front
+            });
+
+            if (file == null)
+                return;
+
+            await DisplayAlert("File Location", file.Path, "OK");
+
+            image.Source = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                return stream;
+            });
+            imageLoaded = true;
+            ImageRow.Height = GridLength.Star;
         }
 
-        public void PickPhotoHandler(object sender, EventArgs e)
+        public async void PickPhotoHandler(object sender, EventArgs e)
         {
-            ReportViewModel.pickPhotoCommand.Execute(null);
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                return;
+            }
+
+            file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+            {
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
+            });
+
+
+            if (file == null)
+                return;
+
+            image.Source = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                return stream;
+            });
+            imageLoaded = true;
+            ImageRow.Height = GridLength.Star;
         }
 
-        public void SendReportHandler(object sender, EventArgs e)
+        public async void SendReportHandler(object sender, EventArgs e)
         {
-            ReportViewModel.sendCommand.Execute(null);
+            await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+            var hasPermission = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+            if (hasPermission != PermissionStatus.Granted)
+            {
+                await DisplayAlert("Photos Not Supported", ":( Permission not granted to photos.", "OK");
+                return;
+            }
+
+            content.title = Title.Text;
+            content.description = Description.Text;
+            content.img_uuid = null;
+            content.lat = 0;
+            content.lon = 0;
+
+            if (String.IsNullOrEmpty(Title.Text))
+            {
+                DisplayAlert("Erreur", "Veuillez spécifier un titre", "OK");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(Description.Text))
+            {
+                DisplayAlert("Erreur", "Veuillez spécifier une description", "OK");
+                return;
+            }
+
+            if (file == null)
+            {
+                DisplayAlert("Erreur", "Veuillez sélectionner une photo", "OK");
+                return;
+            }
+
+            SubmitButton.Text = "";
+            SubmitButton.IsEnabled = false;
+            SubmitIndicator.IsVisible = true;
+            SubmitIndicator.IsRunning = true;
+            Description.IsEnabled = false;
+            Title.IsEnabled = false;
+            TakePhotoButton.IsEnabled = false;
+            PickPhotoButton.IsEnabled = false;
+
+            await Task.Factory.StartNew(async () =>
+            {
+                content.img_uuid = await App.ApiService.UploadFile("image/jpeg", file.GetStream());
+                Console.WriteLine("Reports inc +++ " + content.img_uuid);
+                Console.WriteLine("geoloc available ?" + CrossGeolocator.Current.IsGeolocationAvailable);
+                if (CrossGeolocator.Current.IsGeolocationAvailable)
+                {
+                    Console.WriteLine(" GPS yesss");
+                    Position pos = await CrossGeolocator.Current.GetPositionAsync();
+                    content.lat = pos.Latitude;
+                    content.lon = pos.Longitude;
+                }
+                else
+                {
+                    Console.WriteLine("GPS unavailable");
+                }
+
+                Console.WriteLine("geoloc; " + content.lat + content.lon);
+                ReportViewModel.sendReportCommand.Execute(content);
+            });
         }
 
         public void ReportSentHandler(object sender, EventArgs e)
@@ -66,7 +168,7 @@ namespace citizen.Views
                 Title.Text = "";
                 TakePhotoButton.IsEnabled = true;
                 PickPhotoButton.IsEnabled = true;
-                ReportViewModel.file = null;
+                file = null;
                 image.Source = null;
                 imageLoaded = false;
                 ImageRow.Height = 0;
