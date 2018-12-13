@@ -103,19 +103,9 @@ namespace citizen.Services
         public async Task<string> UploadFile(string MIME, Stream fileStream)
         {
             try { 
-            Console.WriteLine("test");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Application.Current.Properties["accessToken"].ToString());
-            Console.WriteLine("test1");
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            Console.WriteLine("test2");
             HttpContent content = new StreamContent(fileStream);
-            Console.WriteLine("test3");
-            content.Headers.ContentType = new MediaTypeHeaderValue(MIME);
-            Console.WriteLine("test4");
-            form.Add(content);
-            Console.WriteLine("test5");
-            var response = await _httpClient.PostAsync("https://citizen.navispeed.eu/api/common/upload/file", form);
-            //Console.WriteLine("Upload File result: " + response.StatusCode + " " + response.Content.ReadAsStringAsync());
+            var response = await _httpClient.PostAsync("https://citizen.navispeed.eu/api/common/upload/file", content);
             return await response.Content.ReadAsStringAsync();
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
