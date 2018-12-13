@@ -207,6 +207,6 @@
     <BundleResource Include="Resources\send.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Logo_Citizen.png" />
+    <AndroidResource Include="Resources\Logo_Citizen.png" />
   </ItemGroup>
 </Project>
